@@ -1,37 +1,32 @@
 ---
 title: "About"
-description: "A bit about me and this blog."
+description: "What RequirementsFirst is, what it isn't, and who is writing it."
 ---
 
-AstroPaper is a minimal, accessible and SEO-friendly blog theme built with [Astro](https://astro.build/) and [Tailwind CSS](https://tailwindcss.com/).
+RequirementsFirst is a site about the analytical work that sits underneath user stories — the conversations, the framing, the unglamorous bit where you figure out what is actually going on before anyone opens Jira. It is not a "BA tips and tricks" blog. There are enough of those already. It is also not a template library, a certification cheat-sheet, or a place to argue about whether stories should follow the connextra format. Those questions are downstream of the real one.
 
-![Astro Paper](@/assets/images/astropaper-og.jpg)
+The real question is whether you understand the problem.
 
-AstroPaper provides a solid foundation for blogs, or even portfolios\_ with full markdown support, built-in dark mode, and a clean layout that works out-of-the-box.
+## The thesis
 
-The blog posts in this theme also serve as guides, docs or example articles\_ making AstroPaper a flexible starting point for your next content-driven site.
+Most BA content is template-fetishism. It optimises the wrong thing. It teaches you to write cleaner acceptance criteria, structure your stories in a particular way, run refinement sessions with a particular cadence — all of which are real skills, all of which are downstream of the work that actually decides whether a feature lands or quietly rots in production. The work that decides outcomes happens before the ticket is written. It happens in the conversation where a stakeholder hands you a solution and you have to figure out what problem they were trying to solve. It happens when you push back, politely, on a request that does not survive contact with the actual user. It happens when you write one paragraph in your own words describing the problem before you open the tool.
 
-## Features
+That is the work this site is interested in.
 
-AstroPaper comes with a set of useful features that make content publishing easy and effective:
+The other reason for the site is more practical. Most of the BA writing I read either treats the role as junior-PM-with-a-different-title, or treats it as a process function that exists to operate ceremonies. Neither matches the people I have worked next to who are good at it. The ones who are good at it spend their time thinking — about users, about systems, about what the request actually means — and the ticket-writing falls out of that thinking as a near-trivial step. The skill is the thinking. The ticket is the artefact.
 
-- SEO-friendly
-- Fast performance
-- Light & dark mode
-- Highly customizable
-- Organizable blog posts
-- Responsive & accessible
-- Static search with [PageFind](https://pagefind.app/)
-- Automatic social image generation
+## Three things you will read here
 
-and so much more.
+Roughly: writing on the analytical craft itself, writing on using AI tools without outsourcing the judgement that makes a BA useful, and honest reviews of the tools that show up in our actual workflow. The split is roughly 40 / 30 / 30. The tone is direct, contrarian where the contrarian position is defensible, and free of the consultancy vocabulary that infects most writing in this space.
 
-## Show your support
+If a post on this site uses the word "leverage" as a verb, please file a bug.
 
-If you like [AstroPaper](https://github.com/satnaing/astro-paper), consider giving it a star ⭐️.
+## Who is writing this
 
-Found a bug 🐛 or have an improvement ✨ in mind? Feel free to open an [issue](https://github.com/satnaing/astro-paper/issues), submit a [pull request](https://github.com/satnaing/astro-paper/pulls) or start a [discussion](https://github.com/satnaing/astro-paper/discussions).
+Arun Mehta. Senior Business Analyst, 8+ years across enterprise software, regulatory tech, and member platforms. Indian context, mostly IT services. Stories and examples on this site are synthetic — composite scenarios drawn from a long-enough career to recognise the patterns, anonymised so that nobody's actual project gets paraded around the internet. The patterns are real; the names and numbers are not.
 
-If you find this theme helpful, you can also [sponsor me on GitHub](https://github.com/sponsors/satnaing) or [buy me a coffee](https://buymeacoffee.com/satnaing) to show your support — every penny counts.
+## How to follow
 
-Kyay zuu! 🙏🏼
+RSS is in the footer and works today. A newsletter is coming soon for those who prefer email; the signup will appear here once it is live. Until then, the RSS feed or a bookmark is the way.
+
+Comments are off, on purpose. If you want to push back on something, the email link in the footer is the right channel — that is also where corrections go.

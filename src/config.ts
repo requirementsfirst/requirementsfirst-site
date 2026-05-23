@@ -43,6 +43,24 @@ export const SOCIALS: SocialObjects = [
     linkTitle: `Send an email to RequirementsFirst`,
     active: true,
   },
+  {
+    name: "Github",
+    href: "https://github.com/requirementsfirst",
+    linkTitle: `RequirementsFirst on Github`,
+    active: false,
+  },
+  {
+    name: "X",
+    href: "https://x.com/",
+    linkTitle: `RequirementsFirst on X`,
+    active: false,
+  },
+  {
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/",
+    linkTitle: `RequirementsFirst on LinkedIn`,
+    active: false,
+  },
 ];
 
 export const SHARE_LINKS: SocialObjects = [
@@ -56,6 +74,18 @@ export const SHARE_LINKS: SocialObjects = [
     name: "Telegram",
     href: "https://t.me/share/url?url=",
     linkTitle: `Share this post via Telegram`,
+    active: true,
+  },
+  {
+    name: "X",
+    href: "https://x.com/intent/tweet?url=",
+    linkTitle: `Share this post via X`,
+    active: true,
+  },
+  {
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/sharing/share-offsite/?url=",
+    linkTitle: `Share this post via LinkedIn`,
     active: true,
   },
   {

@@ -1,0 +1,27 @@
+---
+// Inline Beehiiv subscribe form. The loader script appends the form into the
+// container element. Heading + footnote are static for clarity and to keep the
+// section legible even before the script loads.
+---
+
+<section
+  aria-labelledby="newsletter-signup-heading"
+  class="border-border my-12 rounded-md border border-dashed px-5 py-6 sm:px-6 sm:py-7"
+>
+  <h2
+    id="newsletter-signup-heading"
+    class="text-xl font-semibold tracking-wide"
+  >
+    Get the next article in your inbox
+  </h2>
+  <p class="text-muted-foreground mt-2 text-sm">
+    One email when we publish. No spam, no course pitches, unsubscribe anytime.
+  </p>
+  <div class="mt-4">
+    <script
+      is:inline
+      async
+      src="https://subscribe-forms.beehiiv.com/v3/loader.js"
+      data-beehiiv-form="99df1d7d-e98a-4de3-a4c6-1272408e66c8"></script>
+  </div>
+</section>

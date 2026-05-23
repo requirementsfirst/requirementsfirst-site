@@ -1,6 +1,6 @@
 import type { Site, SocialObjects } from "./types";
 
-export const SITE: Site = {
+export const SITE = {
   website: "https://requirementsfirst.com/",
   author: "Arun Mehta",
   profile: "https://requirementsfirst.com/",
@@ -9,20 +9,19 @@ export const SITE: Site = {
   ogImage: "astropaper-og.jpg",
   lightAndDarkMode: true,
   postPerIndex: 4,
-  postPerPage: 6,
+  postPerPage: 4,
   scheduledPostMargin: 15 * 60 * 1000,
   showArchives: true,
   showBackButton: true,
   editPost: {
     enabled: false,
-    text: "",
-    url: "",
+    text: "Suggest Changes",
+    url: "https://github.com/requirementsfirst/requirementsfirst-site/edit/main/",
   },
   dynamicOgImage: true,
-  dir: "ltr",
   lang: "en",
   timezone: "Asia/Kolkata",
-};
+} as const;
 
 export const LOCALE = {
   lang: "en",
@@ -40,25 +39,25 @@ export const SOCIALS: SocialObjects = [
   {
     name: "Mail",
     href: "mailto:hello@requirementsfirst.com",
-    linkTitle: `Send an email to RequirementsFirst`,
+    linkTitle: `Send an email to ${SITE.title}`,
     active: true,
   },
   {
     name: "Github",
     href: "https://github.com/requirementsfirst",
-    linkTitle: `RequirementsFirst on Github`,
+    linkTitle: `${SITE.title} on Github`,
     active: false,
   },
   {
     name: "X",
     href: "https://x.com/",
-    linkTitle: `RequirementsFirst on X`,
+    linkTitle: `${SITE.title} on X`,
     active: false,
   },
   {
     name: "LinkedIn",
     href: "https://www.linkedin.com/",
-    linkTitle: `RequirementsFirst on LinkedIn`,
+    linkTitle: `${SITE.title} on LinkedIn`,
     active: false,
   },
 ];

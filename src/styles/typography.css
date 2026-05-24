@@ -4,12 +4,18 @@
   /* ===== Override default Tailwind Typography styles ===== */
   .app-prose {
     @apply prose;
+    /* Long-form body text in Source Serif 4 for readable prose */
+    font-family: var(--font-serif);
 
     h1,
     h2,
     h3,
     h4,
+    h5,
+    h6,
     th {
+      /* Keep headings in Inter for visual hierarchy against the serif body */
+      font-family: var(--font-sans);
       @apply text-foreground mb-3;
     }
 
@@ -84,6 +90,14 @@
 
     pre {
       @apply focus-visible:outline-accent focus-visible:border-transparent focus-visible:outline-2 focus-visible:outline-dashed;
+    }
+
+    /* Keep code in monospace even though surrounding prose is serif */
+    code,
+    pre,
+    kbd,
+    samp {
+      font-family: var(--font-mono);
     }
   }
 

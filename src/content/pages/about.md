@@ -27,8 +27,6 @@ Arun Mehta. Business analyst, writing about the parts of the job nobody talks ab
 
 ## How to follow
 
-Subscribe below to get new articles by email. RSS is in the footer for those who prefer it.
-
-<script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="99df1d7d-e98a-4de3-a4c6-1272408e66c8"></script>
+New articles go out by email — the signup form is at the bottom of every post and on the home page. RSS is in the footer for those who prefer it.
 
 Comments are off, on purpose. If you want to push back on something, the email link in the footer is the right channel — that is also where corrections go.

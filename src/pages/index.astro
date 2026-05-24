@@ -6,7 +6,6 @@ import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
-import Socials from "@/components/Socials.astro";
 import Card from "@/components/Card.astro";
 import LinkButton from "@/components/LinkButton.astro";
 import NewsletterSignup from "@/components/NewsletterSignup.astro";
@@ -14,7 +13,7 @@ import { getSortedPosts } from "@/utils/getSortedPosts";
 import { useTranslations } from "@/i18n";
 import config from "@/config";
 
-const { socials, posts: postsConfig } = config;
+const { posts: postsConfig } = config;
 
 const locale = Astro.currentLocale ?? config.site.lang;
 const t = useTranslations(locale);
@@ -35,45 +34,49 @@ const homePath = getRelativeLocaleUrl(locale, "");
     class="app-layout"
   >
     <section id="hero" class="border-border border-b pt-8 pb-6">
-      <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">
+      <h1
+        class="my-4 text-[2rem] leading-[1.15] font-bold tracking-tight sm:my-6 sm:text-[2.5rem]"
+        style="font-family: var(--font-sans);"
+      >
         Stop optimising the story. Start understanding the problem.
       </h1>
-      <a
-        target="_blank"
-        href={getRelativeLocaleUrl(locale, "rss.xml")}
-        class="inline-block"
-        aria-label="RSS Feed"
-        title="RSS Feed"
-      >
-        <IconRss
-          width={20}
-          height={20}
-          class="stroke-accent scale-125 stroke-3 rtl:-rotate-90"
-        />
-        <span class="sr-only">RSS Feed</span>
-      </a>
 
-      <p>
-        Notes for working business analysts, product owners, and product
-        managers who suspect there is more to the craft than cleaner Jira
-        tickets. The argument here is simple: problem-understanding first,
-        story-writing second. Most BA content gets that order backwards.
-      </p>
-      <p class="mt-2">
-        Three things you will find: writing on the analytical work itself, on
-        using AI without losing the thinking, and unsentimental reviews of the
-        tools BAs actually use.
-      </p>
-      {
-        socials.length > 0 && (
-          <div class="mt-4 flex max-sm:flex-col sm:items-center">
-            <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">
-              {t.home.socialLinks}:
-            </div>
-            <Socials />
-          </div>
-        )
-      }
+      <div
+        id="hero-description"
+        class="text-foreground/90 dark:text-foreground/90 mt-6 max-w-[60ch] space-y-3 text-[1.05rem] leading-[1.7]"
+        style="font-family: var(--font-serif);"
+      >
+        <p>
+          Notes for working business analysts, product owners, and product
+          managers who suspect there is more to the craft than cleaner Jira
+          tickets. The argument here is simple: problem-understanding first,
+          story-writing second. Most BA content gets that order backwards.
+        </p>
+        <p>
+          Three things you will find: writing on the analytical work itself,
+          on using AI without losing the thinking, and unsentimental reviews
+          of the tools BAs actually use.
+        </p>
+      </div>
+
+      <div
+        id="hero-signoff"
+        class="text-muted-foreground dark:text-muted-foreground mt-6 inline-flex items-center gap-2 text-xs tracking-[0.08em] uppercase"
+        style="font-family: var(--font-sans);"
+      >
+        <span aria-hidden="true">&mdash;</span>
+        <span>RequirementsFirst</span>
+        <a
+          target="_blank"
+          href={getRelativeLocaleUrl(locale, "rss.xml")}
+          class="text-muted-foreground hover:text-foreground ms-2 inline-flex items-center"
+          aria-label="RSS Feed"
+          title="RSS Feed"
+        >
+          <IconRss width={16} height={16} class="rtl:-rotate-90" />
+          <span class="sr-only">RSS Feed</span>
+        </a>
+      </div>
     </section>
 
     {

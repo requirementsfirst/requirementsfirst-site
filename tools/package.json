@@ -1,0 +1,14 @@
+{
+  "name": "requirementsfirst-tools",
+  "version": "1.0.0",
+  "description": "Operational tools for requirementsfirst.com. Self-contained; not part of the site build.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "verify": "node verify.mjs",
+    "postinstall": "playwright install chromium"
+  },
+  "dependencies": {
+    "playwright": "^1.60.0"
+  }
+}

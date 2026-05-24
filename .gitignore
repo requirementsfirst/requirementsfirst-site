@@ -25,3 +25,8 @@ pnpm-debug.log*
 
 # pagefind
 public/pagefind
+
+# tools/ — local-run artefacts from the deploy verification script
+tools/screenshots/
+tools/verdict.txt
+tmp-verify/

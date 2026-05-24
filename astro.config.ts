@@ -52,13 +52,44 @@ export default defineConfig({
   },
   fonts: [
     {
+      name: "Inter",
+      cssVariable: "--font-inter",
+      provider: fontProviders.google(),
+      fallbacks: [
+        "system-ui",
+        "-apple-system",
+        "Segoe UI",
+        "Roboto",
+        "sans-serif",
+      ],
+      weights: [400, 500, 600, 700],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      display: "swap",
+      // ttf included so Satori (OG image renderer) can parse the font;
+      // woff2 is what the browser actually downloads.
+      formats: ["woff2", "ttf"],
+    },
+    {
+      name: "Source Serif 4",
+      cssVariable: "--font-source-serif",
+      provider: fontProviders.google(),
+      fallbacks: ["Georgia", "Cambria", "Times New Roman", "serif"],
+      weights: [400, 600],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      display: "swap",
+      formats: ["woff2"],
+    },
+    {
       name: "Google Sans Code",
       cssVariable: "--font-google-sans-code",
       provider: fontProviders.google(),
       fallbacks: ["monospace"],
-      weights: [300, 400, 500, 600, 700],
-      styles: ["normal", "italic"],
-      formats: ["woff", "ttf"],
+      weights: [400, 500, 600, 700],
+      styles: ["normal"],
+      display: "swap",
+      formats: ["woff2"],
     },
   ],
   env: {

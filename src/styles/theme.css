@@ -7,7 +7,13 @@
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
-  --font-app: var(--font-google-sans-code);
+  /* Font tokens. Inter is the UI/headings face; Source Serif 4 is for long-form prose. */
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-source-serif);
+  --font-mono:
+    var(--font-google-sans-code), ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-app: var(--font-inter);
 }
 
 /* Light theme values */

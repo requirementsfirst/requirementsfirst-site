@@ -23,7 +23,7 @@ If a post on this site uses the word "leverage" as a verb, please file a bug.
 
 ## Who is writing this
 
-Arun Mehta. Senior Business Analyst, 8+ years across enterprise software, regulatory tech, and member platforms. Indian context, mostly IT services. Stories and examples on this site are synthetic — composite scenarios drawn from a long-enough career to recognise the patterns, anonymised so that nobody's actual project gets paraded around the internet. The patterns are real; the names and numbers are not.
+Arun Mehta. Business analyst, writing about the parts of the job nobody talks about honestly. Indian context, mostly IT services. Stories and examples on this site are synthetic — composite scenarios drawn from a long-enough career to recognise the patterns, anonymised so that nobody's actual project gets paraded around the internet. The patterns are real; the names and numbers are not.
 
 ## How to follow
 

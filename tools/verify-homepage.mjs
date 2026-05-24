@@ -311,10 +311,14 @@ const homeHtml = await page.content();
     (allCss.match(/\[data-theme="dark"\]|\[data-theme=dark\]|\.dark\b/g) || [])
       .length;
 
-  // Look for a rule that names a class used by the new hero sign-off /
-  // description AND lives inside a dark scope.
+  // Tailwind v4 with the @custom-variant dark (&:where([data-theme=dark],
+  // [data-theme=dark] *)) compiles dark utilities as
+  //   .dark\:text-muted-foreground:where([data-theme=dark],[data-theme=dark] *){…}
+  // i.e. the class name comes BEFORE the dark scope. The check therefore
+  // looks for any compiled `.dark\:CLASS` for a utility we apply to the
+  // new hero elements, AND confirms a [data-theme=dark] scope exists.
   const heroDarkRule =
-    /\[data-theme=["']?dark["']?\][^{}]*(text-muted-foreground|text-foreground\\\/90|text-foreground\/90|font-serif|tracking-\[0\.08em\])/i.test(
+    /\.dark\\:(text-muted-foreground|text-foreground\\\/90|font-serif|tracking-\[0\.08em\])[^{]*\[data-theme=dark\]/i.test(
       allCss
     );
 

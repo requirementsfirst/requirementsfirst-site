@@ -1,12 +1,29 @@
 @plugin "@tailwindcss/typography";
 
 @layer base {
-  /* ===== Override default Tailwind Typography styles ===== */
+  /* ===== Article reading surface =====
+     Long-form prose tuned for a publication-like read: Source Serif 4 body
+     at 19px desktop / 17px mobile, ~68ch measure, 1.7 line-height, no first
+     line indents. Headings stay in Inter for hierarchy against the serif. */
   .app-prose {
     @apply prose;
-    /* Long-form body text in Source Serif 4 for readable prose */
     font-family: var(--font-serif);
+    /* Cap measure at ~68ch on the prose itself (in addition to whatever the
+       layout container imposes). max-w-none lets us beat Tailwind Typography's
+       built-in max-width without using !important. */
+    max-width: 68ch;
+    margin-inline: auto;
+    font-size: 1.0625rem; /* 17px mobile */
+    line-height: 1.7;
+  }
 
+  @media (min-width: 640px) {
+    .app-prose {
+      font-size: 1.1875rem; /* 19px desktop */
+    }
+  }
+
+  .app-prose {
     h1,
     h2,
     h3,
@@ -14,13 +31,47 @@
     h5,
     h6,
     th {
-      /* Keep headings in Inter for visual hierarchy against the serif body */
       font-family: var(--font-sans);
-      @apply text-foreground mb-3;
+      @apply text-foreground;
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+
+    h2 {
+      font-size: 1.75em;
+      margin-top: 2.5em;
+      margin-bottom: 0.5em;
     }
 
     h3 {
-      @apply italic;
+      font-size: 1.35em;
+      margin-top: 2em;
+      margin-bottom: 0.5em;
+      font-style: normal; /* override the inherited italic from earlier */
+    }
+
+    h4 {
+      font-size: 1.15em;
+      margin-top: 1.75em;
+      margin-bottom: 0.5em;
+    }
+
+    p {
+      margin-top: 0;
+      margin-bottom: 1.25em;
+      text-indent: 0;
+    }
+
+    /* Lede paragraph — the first <p> directly after the article H1 (when
+       rendered inside the prose) OR the first <p> of the article body when
+       the H1 is rendered outside the prose container (current layout).
+       Both selectors are listed so the rule keeps working if the header
+       structure is reshuffled later. */
+    > p:first-of-type,
+    h1 + p {
+      font-size: 1.15em;
+      color: color-mix(in srgb, var(--foreground) 85%, transparent);
     }
 
     p,
@@ -28,21 +79,46 @@
     ol,
     ul,
     figcaption,
-    table,
-    code {
+    table {
       @apply text-foreground;
     }
 
+    /* Editorial-style links: underline by default, hover thickens it.
+       No colour shift — the underline carries the affordance. */
     a {
-      @apply text-foreground hover:text-accent wrap-break-word decoration-dashed underline-offset-4 focus-visible:no-underline;
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-color: color-mix(
+        in srgb,
+        var(--foreground) 50%,
+        transparent
+      );
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+      word-wrap: break-word;
+    }
+    a:hover {
+      text-decoration-thickness: 2px;
+      text-decoration-color: var(--foreground);
     }
 
     ul {
       @apply overflow-x-clip;
     }
 
+    ul,
+    ol {
+      margin-top: 1.25em;
+      margin-bottom: 1.25em;
+    }
+
     li {
       @apply marker:text-accent;
+      margin-top: 0.4em;
+      margin-bottom: 0.4em;
+    }
+    li > p {
+      margin-bottom: 0.4em;
     }
 
     hr {
@@ -68,16 +144,39 @@
       }
     }
 
-    code {
-      @apply bg-muted/75 text-foreground rounded p-1 wrap-break-word before:content-none after:content-none;
+    /* Inline code: subtle tint + horizontal padding so it doesn't crash into
+       surrounding text. Fenced code (.astro-code) is unaffected. */
+    :not(pre) > code {
+      background-color: color-mix(in srgb, var(--muted) 40%, transparent);
+      @apply text-foreground rounded;
+      padding: 0.1em 0.35em;
+      font-size: 0.92em;
+    }
+    :not(pre) > code::before,
+    :not(pre) > code::after {
+      content: none;
     }
 
     .astro-code code {
       @apply flex-[1_0_100%] bg-inherit p-0;
+      font-size: inherit;
+      padding: 0;
+      background: transparent;
     }
 
     blockquote {
-      @apply border-s-accent/80 wrap-break-word opacity-80;
+      font-style: italic;
+      font-family: var(--font-serif);
+      border-inline-start: 3px solid
+        color-mix(in srgb, var(--muted-foreground) 70%, transparent);
+      padding-inline-start: 1.25em;
+      margin-inline-start: 0;
+      color: color-mix(in srgb, var(--foreground) 75%, transparent);
+      background: none;
+    }
+    blockquote p:first-of-type::before,
+    blockquote p:last-of-type::after {
+      content: none;
     }
 
     details {

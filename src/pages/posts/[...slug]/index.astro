@@ -1,10 +1,10 @@
 ---
 import { type CollectionEntry, getCollection, render } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import dayjs from "dayjs";
 import PostLayout from "@/layouts/PostLayout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
-import Datetime from "@/components/Datetime.astro";
-import Tag from "@/components/Tag.astro";
 import { getPostSlug, getPostUrl } from "@/utils/getPostPaths";
 import { getSortedPosts } from "@/utils/getSortedPosts";
 import { slugifyStr } from "@/utils/slugify";
@@ -73,6 +73,16 @@ const {
 
 const { Content } = await render(post);
 
+// Masthead inputs. The byline reads "By <Author> · <Date> · <N> min read".
+// Reading time is computed cheaply from the markdown body (200 wpm is the
+// usual reading-time estimate); it's a render-time number, not stored data.
+const eyebrowTag = tags?.[0];
+const footerTags = (tags ?? []).slice(1);
+const formattedDate = dayjs(pubDatetime).format("D MMMM YYYY");
+const wordCount = (post.body ?? "").trim().split(/\s+/).filter(Boolean).length;
+const readingMinutes = Math.max(1, Math.round(wordCount / 200));
+const byline = `By ${config.site.author} · ${formattedDate} · ${readingMinutes} min read`;
+
 let ogImageUrl: string | undefined;
 
 if (typeof initOgImage === "string") {
@@ -111,26 +121,36 @@ const ogImage = ogImageUrl
     class:list={["app-layout", { "mt-8": !config.features.showBackButton }]}
     data-pagefind-body
   >
-    <h1
-      style={{ viewTransitionName: slugifyStr(title.replaceAll(".", "-")) }}
-      class="text-accent inline-block text-2xl font-bold sm:text-3xl"
-    >
-      {title}
-    </h1>
-
-    <div class="my-2 flex items-center gap-2">
-      <Datetime {pubDatetime} {modDatetime} {timezone} size="lg" />
-      <span
-        aria-hidden="true"
-        class:list={[
-          "text-muted-foreground max-sm:hidden",
-          { hidden: !config.features.editPost?.enabled || hideEditPost },
-        ]}
+    <header class="post-masthead mx-auto mt-4 max-w-[68ch]">
+      {
+        eyebrowTag && (
+          <a
+            href={getRelativeLocaleUrl(
+              locale,
+              `tags/${slugifyStr(eyebrowTag)}/`
+            )}
+            class="text-muted-foreground hover:text-accent inline-block font-sans text-xs font-semibold tracking-[0.08em] uppercase no-underline"
+            style="font-family: var(--font-sans);"
+          >
+            {eyebrowTag}
+          </a>
+        )
+      }
+      <h1
+        style={`view-transition-name: ${slugifyStr(title.replaceAll(".", "-"))}; font-family: var(--font-sans);`}
+        class="text-foreground mt-2 text-[32px] leading-[1.15] font-bold tracking-tight sm:text-[40px]"
       >
-        |
-      </span>
-      <EditPost {hideEditPost} {post} class="max-sm:hidden" />
-    </div>
+        {title}
+      </h1>
+      <p
+        class="text-muted-foreground mt-4 text-sm"
+        style="font-family: var(--font-sans);"
+      >
+        {byline}
+      </p>
+      <hr class="border-border my-8 border-t" />
+      <EditPost {hideEditPost} {post} class="mb-4 max-sm:hidden" />
+    </header>
 
     <article
       id="article"
@@ -149,9 +169,29 @@ const ogImage = ogImageUrl
 
     <BackToTopButton />
 
-    <ul class="mt-4 mb-8 flex flex-wrap gap-4 sm:my-8">
-      {tags.map(tag => <Tag tag={slugifyStr(tag)} tagName={tag} size="sm" />)}
-    </ul>
+    {
+      footerTags.length > 0 && (
+        <ul
+          class="mx-auto mt-4 mb-8 flex max-w-[68ch] flex-wrap gap-2 sm:my-8"
+          aria-label="Tags"
+        >
+          {footerTags.map(tag => (
+            <li>
+              <a
+                href={getRelativeLocaleUrl(
+                  locale,
+                  `tags/${slugifyStr(tag)}/`
+                )}
+                class="border-border text-muted-foreground hover:border-accent hover:text-accent inline-block rounded-full border px-3 py-1 text-xs no-underline"
+                style="font-family: var(--font-sans);"
+              >
+                {tag}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
 
     <ShareLinks />
 

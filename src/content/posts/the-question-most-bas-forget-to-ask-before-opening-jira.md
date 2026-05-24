@@ -1,6 +1,6 @@
 ---
 author: Arun Mehta
-pubDatetime: 2026-05-24T16:00:00.000+05:30
+pubDatetime: 2026-05-24T08:00:00.000+05:30
 title: The question most BAs forget to ask before opening Jira
 slug: the-question-most-bas-forget-to-ask-before-opening-jira
 featured: true

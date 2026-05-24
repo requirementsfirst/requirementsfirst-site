@@ -1,23 +1,33 @@
 ---
-// Inline Beehiiv subscribe form. The loader script appends the form into the
-// container element. Heading + footnote are static for clarity and to keep the
-// section legible even before the script loads.
+// Inline Beehiiv subscribe form. The loader script appends the form into
+// the container element. The framed heading + subhead stay legible even
+// before the script loads, so the section never collapses to empty.
+//
+// Headline uses Inter (--font-sans) for hierarchy against article body
+// text; the subhead uses Source Serif 4 (--font-serif) so it reads in
+// continuity with the long-form prose above it. Light/dark mode is
+// inherited via the existing --foreground / --muted-foreground tokens.
 ---
 
 <section
   aria-labelledby="newsletter-signup-heading"
-  class="border-border my-12 rounded-md border border-dashed px-5 py-6 sm:px-6 sm:py-7"
+  class="border-border bg-muted/30 my-12 rounded-md border border-dashed px-5 py-8 text-center sm:px-8 sm:py-10"
 >
   <h2
     id="newsletter-signup-heading"
-    class="text-xl font-semibold tracking-wide"
+    class="text-foreground font-sans text-2xl font-semibold tracking-tight sm:text-3xl"
+    style="font-family: var(--font-sans);"
   >
-    Get the next piece in your inbox
+    Get new posts by email
   </h2>
-  <p class="text-muted-foreground mt-2 text-sm">
-    Honest writing on requirements, BA craft, and AI for analysts. No spam, unsubscribe anytime.
+  <p
+    class="text-muted-foreground mx-auto mt-3 max-w-prose text-base sm:text-lg"
+    style="font-family: var(--font-serif);"
+  >
+    Notes on requirements, problem-framing, and the BA craft. No spam,
+    unsubscribe anytime.
   </p>
-  <div class="mt-4">
+  <div class="mt-6 flex justify-center">
     <script
       is:inline
       async

@@ -66,6 +66,29 @@ cd tools
 node verify-homepage.mjs
 ```
 
+## now-iso.mjs — safely-past pubDatetime stamp
+
+One-liner that prints the current IST time minus 6 hours, formatted as
+`YYYY-MM-DDTHH:mm:ss.000+05:30` — the exact shape Astro Paper expects
+in the `pubDatetime` frontmatter field.
+
+```bash
+node tools/now-iso.mjs
+# 2026-05-25T07:11:48.000+05:30
+```
+
+Why this exists: Astro Paper filters posts whose `pubDatetime` is in
+the future at build time. We've shipped articles with future-dated
+IST stamps three times because the chat-side brain wrote the date
+without checking what UTC actually was when Cloudflare built. The
+six-hour back-shift guarantees the moment is unambiguously past in
+UTC regardless of where the build clock sits, with comfortable buffer
+for the gap between paste and deploy.
+
+Run it before creating a new post file and paste the output verbatim
+into the frontmatter, ignoring whatever `pubDatetime` was suggested in
+the task spec.
+
 ## find-threads.mjs — Reddit distribution candidate finder
 
 Surfaces 3-5 ranked candidate threads to comment on each day. Hits

@@ -1,6 +1,6 @@
 ---
 author: Arun Mehta
-pubDatetime: 2026-05-26T08:00:00.000+05:30
+pubDatetime: 2026-05-25T09:00:00.000+05:30
 title: Acceptance criteria that actually prevent bugs (with 12 worked examples)
 slug: acceptance-criteria-that-actually-prevent-bugs
 featured: false

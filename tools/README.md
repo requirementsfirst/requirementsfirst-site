@@ -51,3 +51,49 @@ Exit code is `0` if all checks pass, `1` otherwise.
 It is intentionally narrow. It is not a full crawl or accessibility
 audit; it's a four-bullet smoke test that catches the regressions we've
 actually shipped in the past.
+
+## verify-homepage.mjs — homepage polish assertions
+
+Companion to `verify.mjs`. Asserts the editorial homepage treatment is
+intact: RSS icon recolour, hero free of article-masthead artefacts,
+serif description, Inter sign-off, hero stripped of the Social Links
+row, article masthead untouched, and dark-mode CSS coverage for the
+new hero elements. Outputs to `verdict-homepage.txt` + `.json` and a
+hero screenshot. Run after homepage changes.
+
+```bash
+cd tools
+node verify-homepage.mjs
+```
+
+## find-threads.mjs — Reddit distribution candidate finder
+
+Surfaces 3-5 ranked candidate threads to comment on each day. Hits
+Reddit's public JSON search API across a small set of BA / PM / agile
+subreddits using a configurable keyword list, applies sanity filters
+(no dead/stickied/old/off-topic threads), and scores survivors by
+question-shape, freshness, comment-volume, and effort signals (post
+body length, question verbs in title).
+
+The script needs no dependencies beyond Node's built-in `fetch` (Node
+18+) and no API keys. It identifies itself with a User-Agent header
+and sleeps 1 s between requests to stay polite. 429s get one 5 s
+back-off retry; 403/404 sub responses are logged and skipped without
+aborting the run.
+
+```bash
+node tools/find-threads.mjs
+```
+
+Output is markdown — top 5 candidates with URL, age, score/comment
+counts, and a 200-char snippet — printed to stdout *and* saved to
+`tools/thread-candidates-YYYY-MM-DD.md` for history. The history files
+are gitignored; keep them locally if you want to scan past weeks.
+
+Edit the `SUBS` and `QUERIES_PER_SUB` constants at the top of the file
+when distribution targets shift. Future work: CLI args for one-off
+overrides without editing the file.
+
+Use it as the first step of the daily distribution routine: run it,
+pick one thread that's actually worth a thoughtful comment, write the
+comment by hand.

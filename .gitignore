@@ -31,4 +31,5 @@ tools/screenshots/
 tools/verdict.txt
 tools/verdict-homepage.txt
 tools/verdict-homepage.json
+tools/thread-candidates-*.md
 tmp-verify/

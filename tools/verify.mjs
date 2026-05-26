@@ -1,4 +1,4 @@
-import { chromium } from "playwright";
+import { chromium, devices } from "playwright";
 import { writeFile, mkdir } from "node:fs/promises";
 import { createHash } from "node:crypto";
 
@@ -199,6 +199,98 @@ const ARTICLE_URL =
   results.check4 = { pass, scriptCount, sectionCount, headingCount, reason };
 }
 
+// ===== CHECK 5: Mobile — no stray "#" next to h2 headings =====
+{
+  const browser = await chromium.launch();
+  const ctx = await browser.newContext({ ...devices["iPhone 14"] });
+  const page = await ctx.newPage();
+  await page.goto(ARTICLE_URL, { waitUntil: "networkidle" });
+  await page.waitForTimeout(2000);
+
+  // Visible "#" characters either inside h2 or in an anchor child of h2.
+  const offenders = await page.evaluate(() => {
+    const out = [];
+    for (const h of document.querySelectorAll("h2")) {
+      const txt = h.textContent || "";
+      const cs = getComputedStyle(h);
+      const visible = cs.display !== "none" && cs.visibility !== "hidden";
+      if (!visible) continue;
+      // Check for "#" rendered inside h2 with non-zero opacity
+      const anchors = h.querySelectorAll("a");
+      for (const a of anchors) {
+        const aText = (a.textContent || "").trim();
+        const opacity = parseFloat(getComputedStyle(a).opacity || "1");
+        if (aText.includes("#") && opacity > 0) {
+          out.push({ h2: txt.slice(0, 60), anchorText: aText, opacity });
+        }
+      }
+      // Bare "#" as direct text node in h2 (no anchor wrap)
+      for (const node of h.childNodes) {
+        if (node.nodeType === 3 && node.nodeValue.includes("#")) {
+          out.push({ h2: txt.slice(0, 60), bareText: node.nodeValue.trim() });
+        }
+      }
+    }
+    return out;
+  });
+
+  await page.screenshot({
+    path: "./screenshots/05-mobile-article.png",
+    fullPage: true,
+  });
+  await browser.close();
+
+  const pass = offenders.length === 0;
+  results.check5 = {
+    pass,
+    offenders,
+    reason: pass ? "" : `${offenders.length} h2(s) show a visible '#' on mobile`,
+  };
+}
+
+// ===== CHECK 6: Newsletter form actually rendered (input or beehiiv iframe) =====
+{
+  const browser = await chromium.launch();
+  const ctx = await browser.newContext({
+    viewport: { width: 1280, height: 800 },
+  });
+  const page = await ctx.newPage();
+  await page.goto(ARTICLE_URL, { waitUntil: "networkidle" });
+  await page.waitForTimeout(5000);
+
+  const formState = await page.evaluate(() => {
+    const section = document.querySelector(
+      'section[aria-labelledby="newsletter-signup-heading"]'
+    );
+    if (!section) return { sectionFound: false };
+    const input = section.querySelector('input[type="email"]');
+    const iframe = section.querySelector("iframe");
+    return {
+      sectionFound: true,
+      hasInput: !!input,
+      hasIframe: !!iframe,
+      iframeSrc: iframe?.src ?? null,
+    };
+  });
+
+  await browser.close();
+
+  let pass = true;
+  let reason = "";
+  if (!formState.sectionFound) {
+    pass = false;
+    reason = "newsletter section not found on article page";
+  } else if (
+    !formState.hasInput &&
+    !(formState.hasIframe && (formState.iframeSrc || "").includes("beehiiv"))
+  ) {
+    pass = false;
+    reason = "no input[type=email] and no beehiiv iframe rendered inside section";
+  }
+
+  results.check6 = { pass, ...formState, reason };
+}
+
 // ===== Output =====
 const lines = [];
 lines.push(`CHECK 1 (Fonts): ${results.check1.pass ? "PASS" : "FAIL"}`);
@@ -234,7 +326,20 @@ if (!results.check4.pass)
   lines.push(`  Reason if fail: ${results.check4.reason}`);
 lines.push("");
 
-const failed = [1, 2, 3, 4].filter(i => !results[`check${i}`].pass);
+lines.push(`CHECK 5 (Mobile heading anchors): ${results.check5.pass ? "PASS" : "FAIL"}`);
+lines.push(`  Offending h2s: ${results.check5.offenders.length}`);
+for (const o of results.check5.offenders) lines.push(`    - ${JSON.stringify(o)}`);
+if (!results.check5.pass) lines.push(`  Reason if fail: ${results.check5.reason}`);
+lines.push("");
+lines.push(`CHECK 6 (Newsletter form rendered): ${results.check6.pass ? "PASS" : "FAIL"}`);
+lines.push(`  section found: ${results.check6.sectionFound}`);
+lines.push(`  has input[email]: ${results.check6.hasInput}`);
+lines.push(`  has iframe: ${results.check6.hasIframe}`);
+lines.push(`  iframe src: ${results.check6.iframeSrc}`);
+if (!results.check6.pass) lines.push(`  Reason if fail: ${results.check6.reason}`);
+lines.push("");
+
+const failed = [1, 2, 3, 4, 5, 6].filter(i => !results[`check${i}`].pass);
 lines.push(
   failed.length === 0
     ? "OVERALL: ALL PASS"

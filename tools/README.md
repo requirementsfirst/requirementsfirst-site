@@ -120,3 +120,20 @@ overrides without editing the file.
 Use it as the first step of the daily distribution routine: run it,
 pick one thread that's actually worth a thoughtful comment, write the
 comment by hand.
+
+## Lessons learned — what we tried and abandoned
+
+### LinkedIn discovery automation (May 2026)
+
+We tried automating LinkedIn post discovery via search engines (DuckDuckGo, Bing, Yandex, Brave Search) so we could find recent posts from PM/BA thought leaders to comment on as part of the distribution strategy.
+
+**Why it failed:** LinkedIn intentionally degrades the crawlability of `/posts/` URLs. Search engines either don't index them (Bing), captcha-block automation (DDG, Yandex, Google), or have stale partial indexes (Brave — most recent indexed posts were 2-4 years old).
+
+**The diagnostic data:** Across 4 search engines tested, 0 of 6 target authors had a single LinkedIn `/posts/` URL indexed within the last 30 days that we could retrieve via unauthenticated HTTP. Search-engine-based discovery is structurally impossible for this content type.
+
+**Don't try this again unless one of these changes:**
+- LinkedIn opens an official Posts API (currently no public roadmap for this)
+- A third-party service emerges that maintains a real-time index of public LinkedIn posts (Proxycurl-like services exist but cost $50-200/month — not worth it at our scale)
+- We have a verified spare LinkedIn account willing to take the suspension risk of Playwright scraping
+
+**Current LinkedIn workflow:** Manual. 5-minute scroll through 3-6 priority author profiles once or twice a week. The "save 80% of time" automation is impossible; the manual workflow is both the floor and the ceiling.

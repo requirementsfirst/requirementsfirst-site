@@ -40,10 +40,11 @@ Contrarian where defensible, Indian English (organise), no consultancy clichés 
 Daily ~45min Mon-Fri: review article draft + paste Claude Code prompt + 1 distribution comment. Friday status check (use Cloudflare Referrers data). Downgrade to 12-month plan if 2 consecutive Fridays missed.
 
 ## Traffic
-Single-digit daily visits (28 May, expected for 3-week-old site). Baseline set. Watch Referrers in Cloudflare to validate distribution channels.
+Baseline 28 May 2026: single-digit daily visits (expected, 3-week-old site). Cloudflare Web Analytics live. Core Web Vitals all green (LCP 92% good, INP/CLS 100%). No referrer data yet. Friday check: watch Referrers to validate Reddit/LinkedIn channels.
 
 ## Workflow rules
 - Every technical task = ONE Claude Code prompt with autonomy clause, never terminal commands to operator.
 - Publish prompt pattern: step 0 run now-iso.mjs → create file verbatim → npm run build → commit → push → wait 90s → verify.mjs → curl URL → report.
 - Infrastructure task >30min not shipping content/traffic → stop, accept manual or defer.
 - New Brain chat per session to control token cost. Paste this file at top.
+- Article frontmatter: always wrap `description:` in double quotes (YAML treats colon-space as a key separator; unquoted descriptions with ": " abort the build).

@@ -1,17 +1,31 @@
 ---
-// Inline Beehiiv subscribe form. The loader script appends the form into
-// the container element. The framed heading + subhead stay legible even
-// before the script loads, so the section never collapses to empty.
+// Inline Beehiiv subscribe form.
 //
-// Headline uses Inter (--font-sans) for hierarchy against article body
-// text; the subhead uses Source Serif 4 (--font-serif) so it reads in
-// continuity with the long-form prose above it. Light/dark mode is
-// inherited via the existing --foreground / --muted-foreground tokens.
+// We embed the form as a direct <iframe> rather than via Beehiiv's
+// loader.js script. The script-loader path was flaky on iOS Safari:
+// it occasionally failed to inject the form into the article-page
+// instance (heading + description visible, form missing), and the
+// injected iframe sometimes rendered wider than its container in
+// dark mode, breaking out of the dashed-border section. A direct
+// iframe avoids both: no UA-sniffing in the loader, no async
+// injection timing, full CSS control over the iframe element.
+//
+// Headline uses Inter (--font-sans) for hierarchy against article
+// body text; the subhead uses Source Serif 4 (--font-serif) so it
+// reads in continuity with the long-form prose above it. Light/dark
+// mode is inherited via the existing --foreground / --muted-foreground
+// tokens.
+//
+// The iframe src is the same URL the Beehiiv loader navigates to;
+// `?slim=true` keeps the framed form to just input+button, no
+// branding header.
+const FORM_ID = "99df1d7d-e98a-4de3-a4c6-1272408e66c8";
+const formSrc = `https://subscribe-forms.beehiiv.com/v3/forms/${FORM_ID}?slim=true`;
 ---
 
 <section
   aria-labelledby="newsletter-signup-heading"
-  class="border-border bg-muted/30 my-12 rounded-md border border-dashed px-5 py-8 text-center sm:px-8 sm:py-10"
+  class="newsletter-signup border-border bg-muted/30 my-12 overflow-hidden rounded-md border border-dashed px-5 py-8 text-center sm:px-8 sm:py-10"
 >
   <h2
     id="newsletter-signup-heading"
@@ -27,11 +41,32 @@
     Notes on requirements, problem-framing, and the BA craft. No spam,
     unsubscribe anytime.
   </p>
-  <div class="mt-6 flex justify-center">
-    <script
-      is:inline
-      async
-      src="https://subscribe-forms.beehiiv.com/v3/loader.js"
-      data-beehiiv-form="99df1d7d-e98a-4de3-a4c6-1272408e66c8"></script>
+  <div class="mt-6 w-full">
+    <iframe
+      src={formSrc}
+      title="Subscribe to RequirementsFirst"
+      class="newsletter-signup__iframe block w-full max-w-full"
+      style="border: 0; min-height: 150px; max-width: 100%;"
+      loading="lazy"
+      scrolling="no"
+    ></iframe>
   </div>
 </section>
+
+<style>
+  /*
+   * Defensive width clamp — Beehiiv's iframe content occasionally
+   * sets an internal min-width on iOS Safari that pushes the frame
+   * past its container. Force the element-level width regardless of
+   * any inline width attribute Beehiiv adds.
+   */
+  .newsletter-signup,
+  .newsletter-signup * {
+    box-sizing: border-box;
+  }
+  .newsletter-signup__iframe {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block;
+  }
+</style>

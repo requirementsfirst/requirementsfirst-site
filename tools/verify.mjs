@@ -146,7 +146,10 @@ const ARTICLE_URL =
   results.check3 = { pass, status, size, hashMatchesDefault, reason };
 }
 
-// ===== CHECK 4: Newsletter (strict, no keyword fallback) =====
+// ===== CHECK 4: Newsletter embed present on article page =====
+// We embed Beehiiv via a direct iframe (the loader.js script approach
+// was flaky on iOS Safari). Verify exactly one beehiiv iframe + one
+// section + one heading on the article page.
 {
   const browser = await chromium.launch();
   const ctx = await browser.newContext({
@@ -154,17 +157,14 @@ const ARTICLE_URL =
   });
   const page = await ctx.newPage();
   await page.goto(ARTICLE_URL, { waitUntil: "networkidle" });
-  await page.waitForTimeout(3000); // let async Beehiiv loader settle
+  await page.waitForTimeout(3000);
 
-  const scriptCount = await page.evaluate(
+  const iframeCount = await page.evaluate(
     () =>
-      document.querySelectorAll('script[src*="subscribe-forms.beehiiv.com"]')
-        .length
+      document.querySelectorAll(
+        'iframe[src*="subscribe-forms.beehiiv.com"]'
+      ).length
   );
-
-  // Stable selector from the NewsletterSignup component:
-  //   <section aria-labelledby="newsletter-signup-heading"> ... </section>
-  // The heading element carries id="newsletter-signup-heading".
   const sectionCount = await page.evaluate(
     () =>
       document.querySelectorAll(
@@ -185,9 +185,9 @@ const ARTICLE_URL =
 
   let pass = true;
   let reason = "";
-  if (scriptCount !== 1) {
+  if (iframeCount !== 1) {
     pass = false;
-    reason = `expected 1 beehiiv script tag, found ${scriptCount}`;
+    reason = `expected 1 beehiiv iframe, found ${iframeCount}`;
   } else if (sectionCount !== 1) {
     pass = false;
     reason = `expected 1 newsletter section[aria-labelledby], found ${sectionCount}`;
@@ -196,7 +196,7 @@ const ARTICLE_URL =
     reason = `expected 1 #newsletter-signup-heading, found ${headingCount}`;
   }
 
-  results.check4 = { pass, scriptCount, sectionCount, headingCount, reason };
+  results.check4 = { pass, iframeCount, sectionCount, headingCount, reason };
 }
 
 // ===== CHECK 5: Mobile — no stray "#" next to h2 headings =====
@@ -248,47 +248,98 @@ const ARTICLE_URL =
   };
 }
 
-// ===== CHECK 6: Newsletter form actually rendered (input or beehiiv iframe) =====
+// ===== CHECK 6: Newsletter form rendered + no overflow, MOBILE viewport =====
+// The original bugs are mobile-specific (iOS Safari): on an article
+// page the form sometimes failed to render at all, and on the homepage
+// the embed overflowed its dashed-border container in dark mode. We
+// run this at iPhone 14 viewport and exercise BOTH home + article pages
+// in BOTH color schemes. PASS only if every (page, scheme) combo has
+// a beehiiv iframe inside the section AND the section's right edge
+// does not exceed the viewport width.
 {
   const browser = await chromium.launch();
-  const ctx = await browser.newContext({
-    viewport: { width: 1280, height: 800 },
-  });
-  const page = await ctx.newPage();
-  await page.goto(ARTICLE_URL, { waitUntil: "networkidle" });
-  await page.waitForTimeout(5000);
+  const targets = [
+    { name: "home/light", url: "https://requirementsfirst.com/", scheme: "light" },
+    { name: "home/dark", url: "https://requirementsfirst.com/", scheme: "dark" },
+    { name: "article/light", url: ARTICLE_URL, scheme: "light" },
+    { name: "article/dark", url: ARTICLE_URL, scheme: "dark" },
+  ];
+  const samples = [];
 
-  const formState = await page.evaluate(() => {
-    const section = document.querySelector(
-      'section[aria-labelledby="newsletter-signup-heading"]'
-    );
-    if (!section) return { sectionFound: false };
-    const input = section.querySelector('input[type="email"]');
-    const iframe = section.querySelector("iframe");
-    return {
-      sectionFound: true,
-      hasInput: !!input,
-      hasIframe: !!iframe,
-      iframeSrc: iframe?.src ?? null,
-    };
-  });
+  for (const t of targets) {
+    const ctx = await browser.newContext({
+      ...devices["iPhone 14"],
+      colorScheme: t.scheme,
+    });
+    const page = await ctx.newPage();
+    await page.goto(t.url, { waitUntil: "networkidle" });
+    await page.waitForTimeout(5000);
 
+    const s = await page.evaluate(() => {
+      const section = document.querySelector(
+        'section[aria-labelledby="newsletter-signup-heading"]'
+      );
+      if (!section) return { sectionFound: false };
+      const r = section.getBoundingClientRect();
+      const iframe = section.querySelector("iframe");
+      const iframeRect = iframe?.getBoundingClientRect() ?? null;
+      // Widest descendant — catches Beehiiv-injected children that
+      // exceed the section's own bounding box.
+      let widest = 0;
+      for (const el of section.querySelectorAll("*")) {
+        const w = el.getBoundingClientRect().right;
+        if (w > widest) widest = w;
+      }
+      return {
+        sectionFound: true,
+        viewportWidth: window.innerWidth,
+        sectionRight: r.right,
+        widestDescendantRight: widest,
+        hasIframe: !!iframe,
+        iframeRight: iframeRect?.right ?? null,
+        iframeSrc: iframe?.src ?? null,
+      };
+    });
+    await page.screenshot({
+      path: `./screenshots/06-${t.name.replace("/", "-")}.png`,
+      fullPage: true,
+    });
+    await ctx.close();
+    samples.push({ ...t, ...s });
+  }
   await browser.close();
 
   let pass = true;
   let reason = "";
-  if (!formState.sectionFound) {
+  const failures = [];
+  for (const s of samples) {
+    if (!s.sectionFound) {
+      failures.push(`${s.name}: newsletter section not found`);
+      continue;
+    }
+    if (
+      !s.hasIframe ||
+      !(s.iframeSrc || "").includes("subscribe-forms.beehiiv.com")
+    ) {
+      failures.push(`${s.name}: no beehiiv iframe inside section`);
+      continue;
+    }
+    // Overflow check: nothing inside the section should extend past the viewport.
+    // Allow a 2px rounding tolerance.
+    if (s.widestDescendantRight > s.viewportWidth + 2) {
+      failures.push(
+        `${s.name}: overflow — widest descendant right=${Math.round(
+          s.widestDescendantRight
+        )}px > viewport ${s.viewportWidth}px`
+      );
+    }
+  }
+  if (failures.length) {
     pass = false;
-    reason = "newsletter section not found on article page";
-  } else if (
-    !formState.hasInput &&
-    !(formState.hasIframe && (formState.iframeSrc || "").includes("beehiiv"))
-  ) {
-    pass = false;
-    reason = "no input[type=email] and no beehiiv iframe rendered inside section";
+    reason = failures.join(" | ");
   }
 
-  results.check6 = { pass, ...formState, reason };
+  results.check6 = { pass, samples, reason };
 }
 
 // ===== Output =====
@@ -319,7 +370,7 @@ if (!results.check3.pass)
   lines.push(`  Reason if fail: ${results.check3.reason}`);
 lines.push("");
 lines.push(`CHECK 4 (Newsletter): ${results.check4.pass ? "PASS" : "FAIL"}`);
-lines.push(`  Beehiiv script tags found: ${results.check4.scriptCount}`);
+lines.push(`  Beehiiv iframes found:     ${results.check4.iframeCount}`);
 lines.push(`  Newsletter sections found: ${results.check4.sectionCount}`);
 lines.push(`  Newsletter headings found: ${results.check4.headingCount}`);
 if (!results.check4.pass)
@@ -331,11 +382,14 @@ lines.push(`  Offending h2s: ${results.check5.offenders.length}`);
 for (const o of results.check5.offenders) lines.push(`    - ${JSON.stringify(o)}`);
 if (!results.check5.pass) lines.push(`  Reason if fail: ${results.check5.reason}`);
 lines.push("");
-lines.push(`CHECK 6 (Newsletter form rendered): ${results.check6.pass ? "PASS" : "FAIL"}`);
-lines.push(`  section found: ${results.check6.sectionFound}`);
-lines.push(`  has input[email]: ${results.check6.hasInput}`);
-lines.push(`  has iframe: ${results.check6.hasIframe}`);
-lines.push(`  iframe src: ${results.check6.iframeSrc}`);
+lines.push(`CHECK 6 (Newsletter form rendered + no mobile overflow): ${results.check6.pass ? "PASS" : "FAIL"}`);
+for (const s of results.check6.samples ?? []) {
+  lines.push(
+    `  ${s.name.padEnd(14)} iframe=${s.hasIframe} widestRight=${
+      s.widestDescendantRight != null ? Math.round(s.widestDescendantRight) : "?"
+    }px viewport=${s.viewportWidth}px`
+  );
+}
 if (!results.check6.pass) lines.push(`  Reason if fail: ${results.check6.reason}`);
 lines.push("");
 

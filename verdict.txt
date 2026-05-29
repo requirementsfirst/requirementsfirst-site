@@ -1,0 +1,30 @@
+CHECK 1 (Fonts): PASS
+  post h1 font-family:  Inter-cb12741dda23ef5a, "Inter-cb12741dda23ef5a fallback: Arial", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif
+  post prose p (article.app-prose p) font-family: "Source Serif 4-6e527c06b7a5ff7e", "Source Serif 4-6e527c06b7a5ff7e fallback: Times New Roman", Georgia, Cambria, "Times New Roman", serif
+  home h1 font-family:  Inter-cb12741dda23ef5a, "Inter-cb12741dda23ef5a fallback: Arial", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif
+
+CHECK 2 (Default OG): PASS
+  HTTP status: 200
+  Content-Type: image/png
+  Size: 33352
+
+CHECK 3 (Per-post OG): PASS
+  HTTP status: 200
+  Size: 55363
+  Hash matches default: NO
+
+CHECK 4 (Newsletter): PASS
+  Beehiiv iframes found:     1
+  Newsletter sections found: 1
+  Newsletter headings found: 1
+
+CHECK 5 (Mobile heading anchors): PASS
+  Offending h2s: 0
+
+CHECK 6 (Newsletter form rendered + no mobile overflow): PASS
+  home/light     iframe=true widestRight=353px viewport=390px
+  home/dark      iframe=true widestRight=353px viewport=390px
+  article/light  iframe=true widestRight=353px viewport=390px
+  article/dark   iframe=true widestRight=353px viewport=390px
+
+OVERALL: ALL PASS

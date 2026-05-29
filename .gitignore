@@ -33,3 +33,8 @@ tools/verdict-homepage.txt
 tools/verdict-homepage.json
 tools/thread-candidates-*.md
 tmp-verify/bug-screenshots/
+
+# stray local-only artefacts that have crept into repo root
+bug-screenshots/
+screenshots/
+verdict.txt

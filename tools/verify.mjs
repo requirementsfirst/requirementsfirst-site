@@ -283,8 +283,6 @@ const ARTICLE_URL =
       const r = section.getBoundingClientRect();
       const iframe = section.querySelector("iframe");
       const iframeRect = iframe?.getBoundingClientRect() ?? null;
-      // Widest descendant — catches Beehiiv-injected children that
-      // exceed the section's own bounding box.
       let widest = 0;
       for (const el of section.querySelectorAll("*")) {
         const w = el.getBoundingClientRect().right;
@@ -297,9 +295,65 @@ const ARTICLE_URL =
         widestDescendantRight: widest,
         hasIframe: !!iframe,
         iframeRight: iframeRect?.right ?? null,
+        iframeBottom: iframeRect?.bottom ?? null,
+        iframeTop: iframeRect?.top ?? null,
+        iframeLeft: iframeRect?.left ?? null,
+        iframeHeight: iframeRect?.height ?? null,
         iframeSrc: iframe?.src ?? null,
       };
     });
+
+    // Cross into the iframe and verify the email input is actually visible
+    // and its bounding box (in page coords via iframe offset) fits within
+    // the iframe element's bounding box (not clipped by a too-short iframe).
+    let inputCheck = { found: false, visible: false, clipped: null };
+    const iframeHandle = await page.$(
+      'section[aria-labelledby="newsletter-signup-heading"] iframe'
+    );
+    if (iframeHandle) {
+      const frame = await iframeHandle.contentFrame();
+      if (frame) {
+        try {
+          await frame.waitForSelector('input[type="email"]', { timeout: 5000 });
+        } catch {}
+        const input = await frame.$('input[type="email"]');
+        const submit = await frame.$('button[type="submit"]');
+        if (input) {
+          const visible = await input.isVisible();
+          const boxInFrame = await input.boundingBox();
+          const submitVisible = submit ? await submit.isVisible() : false;
+          const submitBox = submit ? await submit.boundingBox() : null;
+          // Translate frame-local coords to page coords using iframe rect.
+          let clipped = null;
+          if (boxInFrame && s.iframeTop != null) {
+            const pageTop = s.iframeTop + boxInFrame.y;
+            const pageBottom = pageTop + boxInFrame.height;
+            const pageLeft = s.iframeLeft + boxInFrame.x;
+            const pageRight = pageLeft + boxInFrame.width;
+            clipped =
+              pageBottom > s.iframeTop + s.iframeHeight + 1 ||
+              pageTop < s.iframeTop - 1 ||
+              pageRight > s.iframeLeft + (s.iframeRight - s.iframeLeft) + 1 ||
+              pageLeft < s.iframeLeft - 1;
+          }
+          let submitClipped = null;
+          if (submitBox && s.iframeTop != null) {
+            const pageBottom = s.iframeTop + submitBox.y + submitBox.height;
+            submitClipped = pageBottom > s.iframeTop + s.iframeHeight + 1;
+          }
+          inputCheck = {
+            found: true,
+            visible,
+            boxInFrame,
+            clipped,
+            submitFound: !!submit,
+            submitVisible,
+            submitClipped,
+          };
+        }
+      }
+    }
+    s.input = inputCheck;
     await page.screenshot({
       path: `./screenshots/06-${t.name.replace("/", "-")}.png`,
       fullPage: true,
@@ -332,6 +386,28 @@ const ARTICLE_URL =
           s.widestDescendantRight
         )}px > viewport ${s.viewportWidth}px`
       );
+    }
+    if (!s.input?.found) {
+      failures.push(`${s.name}: email input not found inside iframe`);
+    } else if (!s.input.visible) {
+      failures.push(`${s.name}: email input not visible inside iframe`);
+    } else if (s.input.clipped) {
+      failures.push(
+        `${s.name}: email input clipped by iframe bounds (iframe height=${Math.round(
+          s.iframeHeight
+        )}px)`
+      );
+    }
+    if (s.input?.found) {
+      if (!s.input.submitFound) {
+        failures.push(`${s.name}: submit button not found inside iframe`);
+      } else if (!s.input.submitVisible) {
+        failures.push(`${s.name}: submit button not visible inside iframe`);
+      } else if (s.input.submitClipped) {
+        failures.push(
+          `${s.name}: submit button clipped by iframe bottom edge`
+        );
+      }
     }
   }
   if (failures.length) {
@@ -385,9 +461,15 @@ lines.push("");
 lines.push(`CHECK 6 (Newsletter form rendered + no mobile overflow): ${results.check6.pass ? "PASS" : "FAIL"}`);
 for (const s of results.check6.samples ?? []) {
   lines.push(
-    `  ${s.name.padEnd(14)} iframe=${s.hasIframe} widestRight=${
+    `  ${s.name.padEnd(14)} iframe=${s.hasIframe} h=${
+      s.iframeHeight != null ? Math.round(s.iframeHeight) : "?"
+    }px widestRight=${
       s.widestDescendantRight != null ? Math.round(s.widestDescendantRight) : "?"
-    }px viewport=${s.viewportWidth}px`
+    }px viewport=${s.viewportWidth}px input.visible=${
+      s.input?.visible ?? "?"
+    } input.clipped=${s.input?.clipped ?? "?"} submit.visible=${
+      s.input?.submitVisible ?? "?"
+    } submit.clipped=${s.input?.submitClipped ?? "?"}`
   );
 }
 if (!results.check6.pass) lines.push(`  Reason if fail: ${results.check6.reason}`);

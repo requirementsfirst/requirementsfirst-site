@@ -10,7 +10,7 @@ const POST_URL =
 const ARTICLE_URL =
   "https://requirementsfirst.com/posts/the-question-most-bas-forget-to-ask-before-opening-jira/";
 
-// ===== CHECK 1: Fonts =====
+// ===== CHECK1: Fonts =====
 {
   const browser = await chromium.launch();
   const ctx = await browser.newContext({
@@ -19,7 +19,7 @@ const ARTICLE_URL =
 
   // Post page — verify Inter on H1, Source Serif on prose paragraphs
   const post = await ctx.newPage();
-  await post.goto(POST_URL, { waitUntil: "networkidle" });
+  await post.goto(POST_URL, { waitUntil: "domcontentloaded", timeout: 20000 });
   const postH1Font = await post.evaluate(() => {
     const el = document.querySelector("h1");
     return el ? getComputedStyle(el).fontFamily : null;
@@ -46,7 +46,7 @@ const ARTICLE_URL =
 
   // Home page — verify H1 still Inter
   const home = await ctx.newPage();
-  await home.goto("https://requirementsfirst.com/", { waitUntil: "networkidle" });
+  await home.goto("https://requirementsfirst.com/", { waitUntil: "domcontentloaded", timeout: 20000 });
   const homeH1Font = await home.evaluate(() => {
     const el = document.querySelector("h1");
     return el ? getComputedStyle(el).fontFamily : null;
@@ -86,7 +86,7 @@ const ARTICLE_URL =
   };
 }
 
-// ===== CHECK 2: Default OG =====
+// ===== CHECK2: Default OG =====
 {
   const res = await fetch("https://requirementsfirst.com/og.png");
   const status = res.status;
@@ -111,7 +111,7 @@ const ARTICLE_URL =
   results.check2 = { pass, status, ct, size, buf, reason };
 }
 
-// ===== CHECK 3: Per-post OG =====
+// ===== CHECK3: Per-post OG =====
 {
   const url = `${POST_URL}index.png`;
   const res = await fetch(url);
@@ -146,7 +146,7 @@ const ARTICLE_URL =
   results.check3 = { pass, status, size, hashMatchesDefault, reason };
 }
 
-// ===== CHECK 4: Newsletter embed present on article page =====
+// ===== CHECK4: Newsletter embed present on article page =====
 // We embed Beehiiv via a direct iframe (the loader.js script approach
 // was flaky on iOS Safari). Verify exactly one beehiiv iframe + one
 // section + one heading on the article page.
@@ -156,7 +156,7 @@ const ARTICLE_URL =
     viewport: { width: 1280, height: 800 },
   });
   const page = await ctx.newPage();
-  await page.goto(ARTICLE_URL, { waitUntil: "networkidle" });
+  await page.goto(ARTICLE_URL, { waitUntil: "domcontentloaded", timeout: 20000 });
   await page.waitForTimeout(3000);
 
   const iframeCount = await page.evaluate(
@@ -199,12 +199,12 @@ const ARTICLE_URL =
   results.check4 = { pass, iframeCount, sectionCount, headingCount, reason };
 }
 
-// ===== CHECK 5: Mobile — no stray "#" next to h2 headings =====
+// ===== CHECK5: Mobile — no stray "#" next to h2 headings =====
 {
   const browser = await chromium.launch();
   const ctx = await browser.newContext({ ...devices["iPhone 14"] });
   const page = await ctx.newPage();
-  await page.goto(ARTICLE_URL, { waitUntil: "networkidle" });
+  await page.goto(ARTICLE_URL, { waitUntil: "domcontentloaded", timeout: 20000 });
   await page.waitForTimeout(2000);
 
   // Visible "#" characters either inside h2 or in an anchor child of h2.
@@ -248,7 +248,7 @@ const ARTICLE_URL =
   };
 }
 
-// ===== CHECK 6: Newsletter form rendered + no overflow, MOBILE viewport =====
+// ===== CHECK6: Newsletter form rendered + no overflow, MOBILE viewport =====
 // The original bugs are mobile-specific (iOS Safari): on an article
 // page the form sometimes failed to render at all, and on the homepage
 // the embed overflowed its dashed-border container in dark mode. We
@@ -272,8 +272,36 @@ const ARTICLE_URL =
       colorScheme: t.scheme,
     });
     const page = await ctx.newPage();
-    await page.goto(t.url, { waitUntil: "networkidle" });
-    await page.waitForTimeout(5000);
+    page.setDefaultTimeout(15000);
+    // Production navigation occasionally exceeds the timeout; retry once
+    // rather than letting an uncaught TimeoutError crash the whole run.
+    let navOk = false;
+    for (let attempt = 0; attempt < 2 && !navOk; attempt++) {
+      try {
+        await page.goto(t.url, {
+          waitUntil: "domcontentloaded",
+          timeout: 30000,
+        });
+        navOk = true;
+      } catch (e) {
+        if (attempt === 1) {
+          samples.push({ ...t, sectionFound: false, navError: e.message });
+        }
+      }
+    }
+    if (!navOk) {
+      await ctx.close();
+      continue;
+    }
+    try {
+      const ifr = await page.waitForSelector('iframe[src*="beehiiv"]', {
+        timeout: 12000,
+      });
+      // Bring the lazy-loaded iframe into the viewport so it actually
+      // renders before we measure / screenshot it.
+      await ifr.scrollIntoViewIfNeeded();
+    } catch {}
+    await page.waitForTimeout(3000);
 
     const s = await page.evaluate(() => {
       const section = document.querySelector(
@@ -306,58 +334,75 @@ const ARTICLE_URL =
     // Cross into the iframe and verify the email input is actually visible
     // and its bounding box (in page coords via iframe offset) fits within
     // the iframe element's bounding box (not clipped by a too-short iframe).
+    // Playwright's elementHandle.boundingBox() returns coordinates relative
+    // to the MAIN page, even for elements inside an iframe. So the input box
+    // and the iframe-element box are already in the same coordinate system —
+    // compare them directly to decide whether the input/button is clipped by
+    // the iframe element's bounds. (We can't use contentDocument from page
+    // JS because the Beehiiv frame is cross-origin; the Playwright frame API
+    // is the only way in.)
     let inputCheck = { found: false, visible: false, clipped: null };
-    const iframeHandle = await page.$(
-      'section[aria-labelledby="newsletter-signup-heading"] iframe'
-    );
-    if (iframeHandle) {
-      const frame = await iframeHandle.contentFrame();
-      if (frame) {
-        try {
-          await frame.waitForSelector('input[type="email"]', { timeout: 5000 });
-        } catch {}
-        const input = await frame.$('input[type="email"]');
-        const submit = await frame.$('button[type="submit"]');
-        if (input) {
-          const visible = await input.isVisible();
-          const boxInFrame = await input.boundingBox();
-          const submitVisible = submit ? await submit.isVisible() : false;
-          const submitBox = submit ? await submit.boundingBox() : null;
-          // Translate frame-local coords to page coords using iframe rect.
-          let clipped = null;
-          if (boxInFrame && s.iframeTop != null) {
-            const pageTop = s.iframeTop + boxInFrame.y;
-            const pageBottom = pageTop + boxInFrame.height;
-            const pageLeft = s.iframeLeft + boxInFrame.x;
-            const pageRight = pageLeft + boxInFrame.width;
-            clipped =
-              pageBottom > s.iframeTop + s.iframeHeight + 1 ||
-              pageTop < s.iframeTop - 1 ||
-              pageRight > s.iframeLeft + (s.iframeRight - s.iframeLeft) + 1 ||
-              pageLeft < s.iframeLeft - 1;
+    try {
+      const iframeHandle = await page.$(
+        'section[aria-labelledby="newsletter-signup-heading"] iframe'
+      );
+      if (iframeHandle) {
+        const iframeBox = await iframeHandle.boundingBox();
+        const frame = await iframeHandle.contentFrame();
+        if (frame && iframeBox) {
+          try {
+            await frame.waitForSelector('input[type="email"]', {
+              timeout: 5000,
+            });
+          } catch {}
+          const input = await frame.$('input[type="email"]');
+          const submit = await frame.$('button[type="submit"]');
+          const within = (box) =>
+            box
+              ? box.y >= iframeBox.y - 1 &&
+                box.x >= iframeBox.x - 1 &&
+                box.y + box.height <= iframeBox.y + iframeBox.height + 1 &&
+                box.x + box.width <= iframeBox.x + iframeBox.width + 1
+              : null;
+          if (input) {
+            const visible = await input.isVisible();
+            const inputBox = await input.boundingBox();
+            const submitVisible = submit ? await submit.isVisible() : false;
+            const submitBox = submit ? await submit.boundingBox() : null;
+            const inWin = within(inputBox);
+            const subWin = within(submitBox);
+            inputCheck = {
+              found: true,
+              visible,
+              inputBox,
+              clipped: inWin === null ? null : !inWin,
+              submitFound: !!submit,
+              submitVisible,
+              submitClipped: subWin === null ? null : !subWin,
+            };
           }
-          let submitClipped = null;
-          if (submitBox && s.iframeTop != null) {
-            const pageBottom = s.iframeTop + submitBox.y + submitBox.height;
-            submitClipped = pageBottom > s.iframeTop + s.iframeHeight + 1;
-          }
-          inputCheck = {
-            found: true,
-            visible,
-            boxInFrame,
-            clipped,
-            submitFound: !!submit,
-            submitVisible,
-            submitClipped,
-          };
         }
       }
+    } catch (e) {
+      inputCheck = { found: false, visible: false, clipped: null, error: e.message };
     }
     s.input = inputCheck;
-    await page.screenshot({
-      path: `./screenshots/06-${t.name.replace("/", "-")}.png`,
-      fullPage: true,
-    });
+    // Screenshot the newsletter section only (not fullPage): a fullPage
+    // capture scrolls the whole document, which on a lazy-loaded
+    // cross-origin Beehiiv iframe can stall Playwright's stability wait
+    // indefinitely. Bounded + non-fatal so a flaky capture never hangs
+    // or fails the whole check.
+    try {
+      const sectionEl = await page.$(
+        'section[aria-labelledby="newsletter-signup-heading"]'
+      );
+      const shotTarget = sectionEl ?? page;
+      await shotTarget.screenshot({
+        path: `./screenshots/06-${t.name.replace("/", "-")}.png`,
+        timeout: 10000,
+        animations: "disabled",
+      });
+    } catch {}
     await ctx.close();
     samples.push({ ...t, ...s });
   }
@@ -368,7 +413,11 @@ const ARTICLE_URL =
   const failures = [];
   for (const s of samples) {
     if (!s.sectionFound) {
-      failures.push(`${s.name}: newsletter section not found`);
+      failures.push(
+        s.navError
+          ? `${s.name}: navigation failed — ${s.navError}`
+          : `${s.name}: newsletter section not found`
+      );
       continue;
     }
     if (

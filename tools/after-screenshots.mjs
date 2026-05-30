@@ -30,7 +30,18 @@ for (const t of targets) {
     continue;
   }
   await section.scrollIntoViewIfNeeded();
-  await page.waitForTimeout(1000);
+  // Wait for the Beehiiv form to actually paint its input/button + fonts
+  // inside the cross-origin iframe before capturing, so the operator sees
+  // the fully-rendered form rather than a half-painted frame.
+  const iframeHandle = await section.$("iframe");
+  const frame = iframeHandle ? await iframeHandle.contentFrame() : null;
+  if (frame) {
+    try {
+      await frame.waitForSelector('input[type="email"]', { state: "visible", timeout: 8000 });
+      await frame.waitForSelector('button[type="submit"]', { state: "visible", timeout: 8000 });
+    } catch {}
+  }
+  await page.waitForTimeout(2500);
   await section.screenshot({
     path: `../screenshots-after/${t.name}.png`,
   });

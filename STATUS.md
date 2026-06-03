@@ -47,4 +47,4 @@ Baseline 28 May 2026: single-digit daily visits (expected, 3-week-old site). Clo
 - Publish prompt pattern: step 0 run now-iso.mjs → create file verbatim → npm run build → commit → push → wait 90s → verify.mjs → curl URL → report.
 - Infrastructure task >30min not shipping content/traffic → stop, accept manual or defer.
 - New Brain chat per session to control token cost. Paste this file at top.
-- Article frontmatter: always wrap `description:` in double quotes (YAML treats colon-space as a key separator; unquoted descriptions with ": " abort the build).
+- Article frontmatter: always wrap BOTH title and description fields in double quotes when they contain a colon (YAML colon-space bug aborts the build).

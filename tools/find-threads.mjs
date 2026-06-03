@@ -34,8 +34,22 @@ const QUERIES_PER_SUB = {
   projectmanagement: ["requirements", "stakeholder"],
 };
 
-const USER_AGENT = "RequirementsFirst-Discovery/1.0";
-const REQUEST_DELAY_MS = 1000; // be polite to Reddit
+// Reddit blocks anonymous JSON requests at the edge (HTTP 403 "Blocked")
+// regardless of User-Agent as of mid-2026, so the script must authenticate
+// with a personal script-app. Create one at https://www.reddit.com/prefs/apps
+// (type: "script"), then export the credentials before running:
+//
+//   export REDDIT_CLIENT_ID=...        # the 14-char string under the app name
+//   export REDDIT_CLIENT_SECRET=...    # the "secret" field
+//   export REDDIT_USERNAME=...         # your reddit account username
+//   export REDDIT_PASSWORD=...         # your reddit account password
+//   # optional: export REDDIT_USER_AGENT="requirementsfirst-discovery by u/<you>"
+//
+// Without these the script exits with a clear blocker message.
+const USER_AGENT =
+  process.env.REDDIT_USER_AGENT ||
+  "requirementsfirst-discovery/1.0 (by /u/requirementsfirst)";
+const REQUEST_DELAY_MS = 2000; // be polite — Reddit OAuth allows 60 req/min
 const TOP_N = 8;
 const MAX_AGE_HOURS = 72; // 3 days — niche subs are thin; need pool to filter from
 
@@ -58,8 +72,70 @@ const QUESTION_VERBS = ["how", "should", "why", "help", "advice"];
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
+// OAuth token, fetched once at startup via the password grant. Reddit's
+// script-app tokens last ~24h; one run takes ~2 min so we don't refresh.
+let ACCESS_TOKEN = null;
+
+async function getAccessToken() {
+  const { REDDIT_CLIENT_ID, REDDIT_CLIENT_SECRET, REDDIT_USERNAME, REDDIT_PASSWORD } =
+    process.env;
+  if (!REDDIT_CLIENT_ID || !REDDIT_CLIENT_SECRET || !REDDIT_USERNAME || !REDDIT_PASSWORD) {
+    console.error(
+      "fatal: Reddit now blocks anonymous JSON requests (HTTP 403). This script\n" +
+        "needs OAuth credentials from a personal script-app. Steps:\n" +
+        "  1. Visit https://www.reddit.com/prefs/apps and click 'create another app'.\n" +
+        "  2. Choose type: 'script'. Redirect URI: http://localhost (unused).\n" +
+        "  3. Export the four env vars before running this script:\n" +
+        "       REDDIT_CLIENT_ID, REDDIT_CLIENT_SECRET, REDDIT_USERNAME, REDDIT_PASSWORD\n" +
+        "     (CLIENT_ID is the 14-char string under the app name; CLIENT_SECRET is the\n" +
+        "      'secret' field; username/password are your Reddit login.)\n" +
+        "  4. Re-run: node tools/find-threads.mjs"
+    );
+    process.exit(2);
+  }
+
+  const basic = Buffer.from(
+    `${REDDIT_CLIENT_ID}:${REDDIT_CLIENT_SECRET}`
+  ).toString("base64");
+  const body = new URLSearchParams({
+    grant_type: "password",
+    username: REDDIT_USERNAME,
+    password: REDDIT_PASSWORD,
+  });
+  const res = await fetch("https://www.reddit.com/api/v1/access_token", {
+    method: "POST",
+    headers: {
+      Authorization: `Basic ${basic}`,
+      "User-Agent": USER_AGENT,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body,
+  });
+  if (!res.ok) {
+    const txt = await res.text().catch(() => "");
+    console.error(
+      `fatal: Reddit OAuth token request failed (HTTP ${res.status}). Body: ${txt.slice(0, 300)}`
+    );
+    process.exit(2);
+  }
+  const json = await res.json();
+  if (!json.access_token) {
+    console.error("fatal: Reddit OAuth response had no access_token:", json);
+    process.exit(2);
+  }
+  return json.access_token;
+}
+
+function authHeaders() {
+  return {
+    Authorization: `Bearer ${ACCESS_TOKEN}`,
+    "User-Agent": USER_AGENT,
+  };
+}
+
 async function fetchSearch(sub, query, attempt = 0) {
-  const url = `https://www.reddit.com/r/${encodeURIComponent(
+  // OAuth endpoints live under oauth.reddit.com (not www.reddit.com).
+  const url = `https://oauth.reddit.com/r/${encodeURIComponent(
     sub
   )}/search.json?q=${encodeURIComponent(
     query
@@ -67,7 +143,7 @@ async function fetchSearch(sub, query, attempt = 0) {
 
   let res;
   try {
-    res = await fetch(url, { headers: { "User-Agent": USER_AGENT } });
+    res = await fetch(url, { headers: authHeaders() });
   } catch (err) {
     console.error(`  ! network error r/${sub} "${query}": ${err.message}`);
     return [];
@@ -145,10 +221,11 @@ function scoreCandidate(post, opLastCommentAgeHours = Infinity) {
 // Fetch thread comments and return hours since OP's most recent comment.
 // Returns Infinity if OP has not commented.
 async function fetchOpLastCommentAgeHours(post, attempt = 0) {
-  const url = `https://www.reddit.com${post.permalink}.json?limit=50`;
+  // permalink is like "/r/<sub>/comments/<id>/<slug>/" — hit the OAuth host.
+  const url = `https://oauth.reddit.com${post.permalink}.json?limit=50`;
   let res;
   try {
-    res = await fetch(url, { headers: { "User-Agent": USER_AGENT } });
+    res = await fetch(url, { headers: authHeaders() });
   } catch (err) {
     console.error(`  ! network error fetching ${post.permalink}: ${err.message}`);
     return Infinity;
@@ -192,6 +269,9 @@ function ageString(createdUtc) {
 }
 
 async function main() {
+  ACCESS_TOKEN = await getAccessToken();
+  console.error("authenticated with Reddit OAuth\n");
+
   const seen = new Map(); // id -> { post, score }
 
   for (const sub of SUBS) {

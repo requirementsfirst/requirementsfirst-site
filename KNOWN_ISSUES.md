@@ -24,6 +24,14 @@ Decision: deferred to Month 2 polish pass. Form functions; subscribers can sign 
 
 When revisited: options are (a) custom inline form posting to Beehiiv's subscribe endpoint (full visual control, no iframe), (b) tighter iframe height with overflow detection, (c) override Beehiiv internal CSS via deeper iframe styling. Each carries its own risk; pick after first ~100 subscribers when the polish actually matters.
 
+## tools/find-threads.mjs is permanently dark (4 Jun 2026)
+
+The script still exists in the repo and has OAuth code, but Reddit changed their API access policy on May 18 2026 to require approval for all data access. The old script-app flow now silently rejects with no error. Tested all alternative anonymous endpoints ([www.reddit.com](https://www.reddit.com), old.reddit.com, search.json, listing feeds, pushshift) — all return 403.
+
+Workaround: manual Reddit browsing via Worldofbarca account on the website.
+
+Future option (if needed): apply for Devvit app approval at https://developers.reddit.com/app-registration. Approval is not guaranteed and may take days. Don't pursue unless Reddit distribution becomes critical to traffic.
+
 ## Resolved
 
 (none yet — when items move here, keep them for ~3 months as institutional memory, then prune)

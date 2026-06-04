@@ -25,3 +25,8 @@ Any infrastructure task exceeding ~30 minutes that doesn't ship an article or dr
 ## Verify on real mobile, not just headless
 
 A newsletter embed bug once passed verify.mjs (headless Chromium) but broke on iOS Safari. Headless checks confirm markup and basic layout; they do not catch real-device rendering, touch behaviour, or vendor-specific quirks. **Rule:** confirm critical UI on a real mobile device before declaring a change done, not just automated checks.
+
+## Distribution
+
+### Reddit API access changed in May 2026 (4 Jun 2026)
+Reddit published a "Responsible Builder Policy" on May 18, 2026 that requires explicit approval before any API access, even for script-type apps. Old "create script app, get instant credentials" flow is dead — silently rejected with no error message. The path forward is either (a) Devvit app registration + approval (days, uncertain), or (b) support ticket explaining use case. Neither is worth the effort for a single-developer thread-finder. Rule: Reddit thread automation is permanently deprecated. Distribution via Reddit happens manually through the Worldofbarca account on the website.

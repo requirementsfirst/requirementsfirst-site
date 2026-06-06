@@ -27,8 +27,23 @@ Contrarian where defensible, Indian English (organise), no consultancy clichés 
 
 ## Distribution
 - Reddit: account "Worldofbarca" (anon, 2400+ karma). Comment only on fresh threads with engaged OP. r/businessanalysis blocks links in comments.
-- LinkedIn: Page "RequirementsFirst" (id 118074270). Comment as Page on PM/BA thought leaders (Aakash Gupta = linkedin.com/in/aakashg0, Shreyas Doshi, Lenny Rachitsky). PENDING: create generic LinkedIn account as primary admin to sever identity link from real account. Cover story if discovered: family member owns page.
-- Lesson: engagement velocity > topic fit. Search engines can't discover LinkedIn posts (de-indexed).
+- LinkedIn: Page "RequirementsFirst" (id 118074270). Comment as Page on PM/BA thought leaders. Active rotation list (12 profiles, refresh every 4-6 weeks):
+  - aakashg0 (Aakash Gupta) — PM career + AI
+  - shreyasdoshi (Shreyas Doshi) — product + leadership
+  - lennyrachitsky (Lenny Rachitsky) — PM, growth
+  - mhcagan (Marty Cagan) — PM craft
+  - teresatorres (Teresa Torres) — continuous discovery
+  - petrawille (Petra Wille) — product leadership
+  - jackiebavaro (Jackie Bavaro) — PM career
+  - aatirr (Aatir Abdul Rauf) — India PM/PLG
+  - pavanbelagatti (Pavan Belagatti) — India devrel/product
+  - andre-albuquerque (Andre Albuquerque) — builder PM
+  - majavoje (Maja Voje) — GTM
+  - rich-mironov-12a4a (Rich Mironov) — PM classics
+
+  Rotation rule: cycle through profiles; don't comment on the same person twice in a row unless they're the only one with a relevant fresh post. Track which profile got the last comment in the brain's working memory across sessions.
+  PENDING: create generic LinkedIn account as primary admin to sever identity link from real account. Cover story if discovered: family member owns page.
+  Lesson: engagement velocity > topic fit. Search engines can't discover LinkedIn posts (de-indexed).
 
 ## Monetization
 - Affiliates PAUSED until Month 2 (need traffic first; premature apps get rejected and flag future ones). ClickUp application pending. PartnerStack Network rejected.

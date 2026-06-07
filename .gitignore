@@ -39,3 +39,7 @@ bug-screenshots/
 screenshots/
 verdict.txt
 screenshots-after/
+
+# one-off social profile artefacts (uploaded manually, not site assets)
+profile-twitter-400.png
+header-twitter-1500.png

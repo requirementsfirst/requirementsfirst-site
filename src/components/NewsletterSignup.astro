@@ -1,58 +1,111 @@
 ---
 // Inline Beehiiv subscribe form.
 //
+// Two variants:
+//   - "full" (default): big bordered section, used at the bottom of
+//     posts and on the homepage.
+//   - "inline": compact in-article instance; the post layout JS
+//     re-parents this node to sit just after the first <h2> inside
+//     the article body so the offer surfaces while the reader is
+//     mid-flow, not only at the end.
+//
 // We embed the form as a direct <iframe> rather than via Beehiiv's
-// loader.js script. The script-loader path was flaky on iOS Safari:
-// it occasionally failed to inject the form into the article-page
-// instance (heading + description visible, form missing), and the
-// injected iframe sometimes rendered wider than its container in
-// dark mode, breaking out of the dashed-border section. A direct
-// iframe avoids both: no UA-sniffing in the loader, no async
-// injection timing, full CSS control over the iframe element.
+// loader.js script. The script-loader path was flaky on iOS Safari
+// (form sometimes never injected; iframe sometimes broke out of its
+// container in dark mode). Direct iframe = no UA-sniffing, no async
+// injection timing, full CSS control.
 //
-// Headline uses Inter (--font-sans) for hierarchy against article
-// body text; the subhead uses Source Serif 4 (--font-serif) so it
-// reads in continuity with the long-form prose above it. Light/dark
-// mode is inherited via the existing --foreground / --muted-foreground
-// tokens.
-//
-// The iframe src is the same URL the Beehiiv loader navigates to;
-// `?slim=true` keeps the framed form to just input+button, no
-// branding header.
+// Height note: the iframe default (150px) clips the email input and
+// Subscribe button below the visible area on mobile. The working
+// height is 360px — do not lower this without re-running
+// tools/verify.mjs CHECK 7 (asserts input+button visible inside the
+// iframe frame at 390x844 and 1280x800).
+
+interface Props {
+  variant?: "full" | "inline";
+  id?: string;
+}
+
+const { variant = "full", id } = Astro.props;
+
 const FORM_ID = "99df1d7d-e98a-4de3-a4c6-1272408e66c8";
 const formSrc = `https://subscribe-forms.beehiiv.com/v3/forms/${FORM_ID}?slim=true`;
+const isInline = variant === "inline";
+const headingId = isInline
+  ? "newsletter-signup-inline-heading"
+  : "newsletter-signup-heading";
+const sectionId = id ?? (isInline ? "newsletter-inline" : undefined);
 ---
 
-<section
-  aria-labelledby="newsletter-signup-heading"
-  class="newsletter-signup border-border bg-muted/30 my-12 overflow-hidden rounded-md border border-dashed px-5 py-8 text-center sm:px-8 sm:py-10"
->
-  <h2
-    id="newsletter-signup-heading"
-    class="text-foreground font-sans text-2xl font-semibold tracking-tight sm:text-3xl"
-    style="font-family: var(--font-sans);"
-  >
-    Get new posts by email
-  </h2>
-  <p
-    class="text-muted-foreground mx-auto mt-3 max-w-prose text-base sm:text-lg"
-    style="font-family: var(--font-serif);"
-  >
-    Notes on requirements, problem-framing, and the BA craft. No spam,
-    unsubscribe anytime.
-  </p>
-  <div class="mt-6 w-full">
-    <iframe
-      src={formSrc}
-      title="Subscribe to RequirementsFirst"
-      class="newsletter-signup__iframe block w-full max-w-full"
-      height="360"
-      style="border: 0; height: 360px; max-width: 100%;"
-      loading="lazy"
-      scrolling="no"
-    ></iframe>
-  </div>
-</section>
+{
+  isInline ? (
+    <section
+      id={sectionId}
+      data-newsletter-inline
+      aria-labelledby={headingId}
+      class="newsletter-signup newsletter-signup--inline border-border bg-muted/30 my-10 overflow-hidden rounded-md border border-dashed px-5 py-6 text-center sm:px-7 sm:py-7"
+    >
+      <h3
+        id={headingId}
+        class="text-foreground font-sans text-xl font-semibold tracking-tight sm:text-2xl"
+        style="font-family: var(--font-sans);"
+      >
+        Like this? Get the next one by email.
+      </h3>
+      <p
+        class="text-muted-foreground mx-auto mt-2 max-w-prose text-sm sm:text-base"
+        style="font-family: var(--font-serif);"
+      >
+        Get each new piece on requirements craft as it publishes. No spam,
+        unsubscribe anytime.
+      </p>
+      <div class="mt-5 w-full">
+        <iframe
+          src={formSrc}
+          title="Subscribe to RequirementsFirst"
+          class="newsletter-signup__iframe block w-full max-w-full"
+          height="360"
+          style="border: 0; height: 360px; max-width: 100%;"
+          loading="lazy"
+          scrolling="no"
+        />
+      </div>
+    </section>
+  ) : (
+    <section
+      id={sectionId}
+      data-newsletter-full
+      aria-labelledby={headingId}
+      class="newsletter-signup border-border bg-muted/30 my-12 overflow-hidden rounded-md border border-dashed px-5 py-8 text-center sm:px-8 sm:py-10"
+    >
+      <h2
+        id={headingId}
+        class="text-foreground font-sans text-2xl font-semibold tracking-tight sm:text-3xl"
+        style="font-family: var(--font-sans);"
+      >
+        Get new posts by email
+      </h2>
+      <p
+        class="text-muted-foreground mx-auto mt-3 max-w-prose text-base sm:text-lg"
+        style="font-family: var(--font-serif);"
+      >
+        Get each new piece on requirements craft as it publishes. No spam,
+        unsubscribe anytime.
+      </p>
+      <div class="mt-6 w-full">
+        <iframe
+          src={formSrc}
+          title="Subscribe to RequirementsFirst"
+          class="newsletter-signup__iframe block w-full max-w-full"
+          height="360"
+          style="border: 0; height: 360px; max-width: 100%;"
+          loading="lazy"
+          scrolling="no"
+        />
+      </div>
+    </section>
+  )
+}
 
 <style>
   /*

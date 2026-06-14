@@ -163,6 +163,17 @@ const ogImage = ogImageUrl
       <Content />
     </article>
 
+    {/*
+      Inline newsletter form. Rendered hidden here; the post-mount
+      script below moves it to just after the first <h2> inside
+      #article so readers see the offer mid-flow, not only at the
+      end. Both the inline and the bottom instance are verified at
+      desktop + mobile by tools/verify.mjs CHECK 7.
+    */}
+    <div id="newsletter-inline-mount" hidden>
+      <NewsletterSignup variant="inline" />
+    </div>
+
     <hr class="my-8 border-dashed" />
 
     <EditPost class="sm:hidden" {hideEditPost} {post} />
@@ -281,6 +292,27 @@ const ogImage = ogImageUrl
     }
   }
   attachCopyButtons();
+
+  // Move the inline newsletter form to just after the first <h2> in
+  // the article body. Rendered hidden at the end of <main> and
+  // re-parented here so it appears mid-flow without forcing every
+  // post's markdown to embed a component. If the post has no <h2>,
+  // we leave it hidden — the bottom form still renders.
+  function placeInlineNewsletter() {
+    const mount = document.getElementById("newsletter-inline-mount");
+    if (!mount) return;
+    const inline = mount.querySelector("[data-newsletter-inline]");
+    if (!inline) return;
+    if (inline.dataset.placed === "true") return;
+    const article = document.getElementById("article");
+    if (!article) return;
+    const firstH2 = article.querySelector("h2");
+    if (!firstH2) return;
+    firstH2.insertAdjacentElement("afterend", inline);
+    inline.dataset.placed = "true";
+    mount.remove();
+  }
+  placeInlineNewsletter();
 
   document.addEventListener("astro:after-swap", () =>
     window.scrollTo({ left: 0, top: 0, behavior: "instant" })

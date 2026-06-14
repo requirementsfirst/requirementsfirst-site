@@ -467,6 +467,272 @@ const ARTICLE_URL =
   results.check6 = { pass, samples, reason };
 }
 
+// ===== CHECK7: Newsletter forms (inline + bottom) at desktop + mobile =====
+// This check exists because the previous form failures all slipped past
+// checks that only confirmed "iframe exists." The actual failure modes
+// were inside the iframe frame context (input clipped, button below the
+// iframe's height). We now have TWO instances per article (inline
+// mid-article + bottom). This check enters the cross-origin Beehiiv
+// frame for EACH instance at EACH viewport and asserts:
+//   a) iframe has non-zero width/height
+//   b) email input is present and visible inside the frame
+//   c) submit button is present and visible inside the frame
+//   d) neither input nor button is clipped by the iframe element's
+//      bounding box (exact bug from failure #2)
+//   e) (best-effort) placeholder text is not truncated — cross-origin
+//      blocks DOM access to attributes from page JS, but Playwright's
+//      frame.evaluate runs inside the iframe so we can still read it
+//   f) no horizontal page overflow at this viewport
+{
+  const browser = await chromium.launch();
+  const viewports = [
+    { name: "desktop", contextOpts: { viewport: { width: 1280, height: 800 } } },
+    { name: "mobile", contextOpts: devices["iPhone 14"] },
+  ];
+  const instances = [
+    { name: "inline", selector: "section[data-newsletter-inline]" },
+    { name: "bottom", selector: "section[data-newsletter-full]" },
+  ];
+  await mkdir("./screenshots/check7", { recursive: true });
+  const results7 = [];
+
+  for (const v of viewports) {
+    const ctx = await browser.newContext(v.contextOpts);
+    const page = await ctx.newPage();
+    page.setDefaultTimeout(15000);
+    let navOk = false;
+    for (let attempt = 0; attempt < 2 && !navOk; attempt++) {
+      try {
+        await page.goto(ARTICLE_URL, {
+          waitUntil: "domcontentloaded",
+          timeout: 30000,
+        });
+        navOk = true;
+      } catch (e) {
+        if (attempt === 1) {
+          for (const inst of instances) {
+            results7.push({
+              viewport: v.name,
+              instance: inst.name,
+              fatal: `navigation failed: ${e.message}`,
+            });
+          }
+        }
+      }
+    }
+    if (!navOk) {
+      await ctx.close();
+      continue;
+    }
+    // Give the post-mount script time to re-parent the inline form.
+    await page.waitForTimeout(800);
+
+    // Page-level: horizontal overflow at this viewport.
+    const overflow = await page.evaluate(() => ({
+      scrollWidth: document.documentElement.scrollWidth,
+      innerWidth: window.innerWidth,
+    }));
+
+    for (const inst of instances) {
+      const entry = {
+        viewport: v.name,
+        instance: inst.name,
+        a: null,
+        b: null,
+        c: null,
+        d: null,
+        e: null,
+        f: null,
+        notes: [],
+      };
+      // f: page-level overflow (same per viewport but reported per row
+      // for table clarity).
+      entry.f = overflow.scrollWidth <= overflow.innerWidth + 2;
+      if (!entry.f) {
+        entry.notes.push(
+          `f: horizontal overflow scrollWidth=${overflow.scrollWidth} viewport=${overflow.innerWidth}`
+        );
+      }
+
+      const section = await page.$(inst.selector);
+      if (!section) {
+        entry.a = false;
+        entry.b = false;
+        entry.c = false;
+        entry.d = false;
+        entry.e = false;
+        entry.notes.push(`section ${inst.selector} not found on page`);
+        results7.push(entry);
+        continue;
+      }
+      // Bring the iframe into view so lazy-load fires.
+      await section.scrollIntoViewIfNeeded().catch(() => {});
+      await page.waitForTimeout(2500);
+
+      const iframeHandle = await section.$("iframe");
+      if (!iframeHandle) {
+        entry.a = false;
+        entry.notes.push("no iframe inside section");
+        results7.push(entry);
+        continue;
+      }
+      const iframeBox = await iframeHandle.boundingBox();
+      entry.a =
+        !!iframeBox && iframeBox.width > 0 && iframeBox.height > 0;
+      if (!entry.a) {
+        entry.notes.push(
+          `a: iframe box = ${JSON.stringify(iframeBox)}`
+        );
+      }
+
+      const frame = await iframeHandle.contentFrame();
+      if (!frame || !iframeBox) {
+        entry.b = false;
+        entry.c = false;
+        entry.d = false;
+        entry.e = false;
+        entry.notes.push("could not enter iframe frame context");
+        results7.push(entry);
+        continue;
+      }
+      try {
+        await frame.waitForSelector('input[type="email"]', { timeout: 8000 });
+      } catch {}
+      const input = await frame.$('input[type="email"]');
+      const submit = await frame.$('button[type="submit"]');
+
+      const within = (box) =>
+        box
+          ? box.y >= iframeBox.y - 1 &&
+            box.x >= iframeBox.x - 1 &&
+            box.y + box.height <= iframeBox.y + iframeBox.height + 1 &&
+            box.x + box.width <= iframeBox.x + iframeBox.width + 1
+          : null;
+
+      if (!input) {
+        entry.b = false;
+        entry.notes.push("b: input[type=email] not found in frame");
+      } else {
+        const visible = await input.isVisible();
+        entry.b = visible;
+        if (!visible) entry.notes.push("b: input not visible");
+      }
+      if (!submit) {
+        entry.c = false;
+        entry.notes.push("c: submit button not found in frame");
+      } else {
+        const visible = await submit.isVisible();
+        entry.c = visible;
+        if (!visible) entry.notes.push("c: submit not visible");
+      }
+      // d: clipping — input AND submit both inside iframe box.
+      const inputBox = input ? await input.boundingBox() : null;
+      const submitBox = submit ? await submit.boundingBox() : null;
+      const inWin = within(inputBox);
+      const subWin = within(submitBox);
+      if (inWin === null || subWin === null) {
+        entry.d = false;
+        entry.notes.push("d: could not measure input/submit boxes");
+      } else {
+        entry.d = inWin && subWin;
+        if (!entry.d) {
+          entry.notes.push(
+            `d: clipped — inputWithin=${inWin} submitWithin=${subWin} iframeH=${Math.round(
+              iframeBox.height
+            )}`
+          );
+        }
+      }
+
+      // e: placeholder text not truncated. We measure the input's
+      // scrollWidth vs clientWidth — if the placeholder is wider than
+      // the input box, the browser truncates it visually. Best-effort:
+      // cross-origin blocks page-level access, but frame.evaluate runs
+      // INSIDE the iframe so it works.
+      try {
+        const ph = await frame.evaluate(() => {
+          const el = document.querySelector('input[type="email"]');
+          if (!el) return null;
+          const cs = getComputedStyle(el);
+          return {
+            placeholder: el.getAttribute("placeholder"),
+            scrollWidth: el.scrollWidth,
+            clientWidth: el.clientWidth,
+            paddingLeft: parseFloat(cs.paddingLeft) || 0,
+            paddingRight: parseFloat(cs.paddingRight) || 0,
+            fontSize: cs.fontSize,
+          };
+        });
+        if (!ph) {
+          entry.e = false;
+          entry.notes.push("e: could not read input in frame");
+        } else {
+          // Measure rendered width of the placeholder string using a
+          // canvas with the same font; compare to inner content width.
+          const measured = await frame.evaluate((font) => {
+            const el = document.querySelector('input[type="email"]');
+            if (!el) return null;
+            const cs = getComputedStyle(el);
+            const c = document.createElement("canvas");
+            const ctx2 = c.getContext("2d");
+            ctx2.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+            return ctx2.measureText(el.getAttribute("placeholder") || "")
+              .width;
+          });
+          const innerWidth =
+            ph.clientWidth - ph.paddingLeft - ph.paddingRight;
+          // 4px tolerance for font-metric rounding.
+          entry.e = measured != null && measured <= innerWidth + 4;
+          if (!entry.e) {
+            entry.notes.push(
+              `e: placeholder "${ph.placeholder}" measured=${
+                measured != null ? Math.round(measured) : "?"
+              }px innerWidth=${Math.round(innerWidth)}px — likely truncated`
+            );
+          }
+        }
+      } catch (err) {
+        entry.e = false;
+        entry.notes.push(`e: placeholder check error: ${err.message}`);
+      }
+
+      // Screenshot just this section.
+      try {
+        await section.screenshot({
+          path: `./screenshots/check7/${v.name}-${inst.name}.png`,
+          timeout: 10000,
+          animations: "disabled",
+        });
+      } catch {}
+
+      results7.push(entry);
+    }
+    await ctx.close();
+  }
+  await browser.close();
+
+  const failed = results7.filter(
+    (r) =>
+      r.fatal ||
+      r.a === false ||
+      r.b === false ||
+      r.c === false ||
+      r.d === false ||
+      r.e === false ||
+      r.f === false
+  );
+  results.check7 = {
+    pass: failed.length === 0,
+    rows: results7,
+    reason: failed
+      .map(
+        (r) =>
+          `${r.viewport}/${r.instance}: ${r.fatal ?? r.notes.join("; ")}`
+      )
+      .join(" | "),
+  };
+}
+
 // ===== Output =====
 const lines = [];
 lines.push(`CHECK 1 (Fonts): ${results.check1.pass ? "PASS" : "FAIL"}`);
@@ -524,7 +790,23 @@ for (const s of results.check6.samples ?? []) {
 if (!results.check6.pass) lines.push(`  Reason if fail: ${results.check6.reason}`);
 lines.push("");
 
-const failed = [1, 2, 3, 4, 5, 6].filter(i => !results[`check${i}`].pass);
+lines.push(`CHECK 7 (Newsletter forms inline+bottom @ desktop+mobile): ${results.check7.pass ? "PASS" : "FAIL"}`);
+lines.push("  instance/viewport       a   b   c   d   e   f");
+for (const r of results.check7.rows ?? []) {
+  const mark = v => (v === true ? "Y" : v === false ? "N" : "?");
+  lines.push(
+    `  ${r.instance.padEnd(7)}/${r.viewport.padEnd(8)}     ${mark(r.a)}   ${mark(
+      r.b
+    )}   ${mark(r.c)}   ${mark(r.d)}   ${mark(r.e)}   ${mark(r.f)}${
+      r.fatal ? "   FATAL: " + r.fatal : ""
+    }`
+  );
+  for (const n of r.notes ?? []) lines.push(`     - ${n}`);
+}
+if (!results.check7.pass) lines.push(`  Reason if fail: ${results.check7.reason}`);
+lines.push("");
+
+const failed = [1, 2, 3, 4, 5, 6, 7].filter(i => !results[`check${i}`].pass);
 lines.push(
   failed.length === 0
     ? "OVERALL: ALL PASS"

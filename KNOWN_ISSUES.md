@@ -24,6 +24,18 @@ Decision: deferred to Month 2 polish pass. Form functions; subscribers can sign 
 
 When revisited: options are (a) custom inline form posting to Beehiiv's subscribe endpoint (full visual control, no iframe), (b) tighter iframe height with overflow detection, (c) override Beehiiv internal CSS via deeper iframe styling. Each carries its own risk; pick after first ~100 subscribers when the polish actually matters.
 
+### "Ent" truncation — CONFIRMED Beehiiv-side, operator action (14 Jun 2026)
+
+Measured inside the cross-origin frame by `tools/verify.mjs` CHECK 7 (e): on mobile (iPhone 14, 390px) the email input's inner content width is only ~21px while the placeholder "Enter your email" needs ~118px, so it renders as "Ent". Desktop is fine (full "Enter your email", input is wide). Both the inline and bottom instances are affected on mobile, identically — it is the Beehiiv form's own responsive layout, not our wrapper. Our container gives the iframe full width (iframe element measures 316px wide on mobile); the input simply does not expand to fill it.
+
+Not fixable in this repo (cross-origin). **Operator fix in the Beehiiv dashboard:**
+1. Beehiiv → Forms → select this form (id `99df1d7d-e98a-4de3-a4c6-1272408e66c8`).
+2. Open the Email field settings. Set the input to full width / 100% (remove any fixed pixel width on the field) so on narrow viewports the input fills the row instead of sitting at a fixed narrow width; if the layout allows, let the input and Subscribe button stack on mobile.
+3. If the platform offers no width control, shorten the placeholder to "Email" as a fallback so the visible text is not clipped.
+4. Re-run `cd tools && node verify.mjs` and confirm CHECK 7 (e) flips from N to Y on both mobile rows.
+
+Tracking: CHECK 7 measures and prints this every run (loud "OPERATOR ACTION REQUIRED" block) but treats (e) as NON-GATING, because it is outside our codebase. The code-controlled assertions (iframe present, input/button visible, not clipped, no overflow) gate and currently pass at both viewports for both instances.
+
 ## tools/find-threads.mjs is permanently dark (4 Jun 2026)
 
 The script still exists in the repo and has OAuth code, but Reddit changed their API access policy on May 18 2026 to require approval for all data access. The old script-app flow now silently rejects with no error. Tested all alternative anonymous endpoints ([www.reddit.com](https://www.reddit.com), old.reddit.com, search.json, listing feeds, pushshift) — all return 403.

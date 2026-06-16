@@ -10,7 +10,7 @@ tags:
   - requirements
   - business-analysis
   - craft
-description: "The five-question framework only works if you can get the questions asked. Most BA training assumes cooperative stakeholders. The real ones often aren't. Here's what actually works when the person you're interrogating doesn't want to be interrogated."
+description: "How to handle difficult stakeholders who resist your questions. Four types of resistance, five tactics, and why pushback usually means you asked the right question."
 ---
 
 A BA I respect told me last month that the five-question approach to requirements doesn't work in her org. The questions are fine, she said. The problem is that her stakeholders refuse to answer them. They take the request as adversarial. They escalate. They go to her manager. They say "just build what I asked for, why are you making this hard."

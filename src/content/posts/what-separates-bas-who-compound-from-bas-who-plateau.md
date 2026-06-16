@@ -10,7 +10,7 @@ tags:
   - career
   - craft
   - judgement
-description: "Two BAs start the same year with the same skills. Five years later one is the person senior leaders ask for by name and the other does competent work nobody notices. The difference is not talent or luck. It is a specific, boring, repeatable thing."
+description: "How to grow a business analyst career: what separates BAs who advance from those who plateau. Not talent or luck, but a specific, repeatable practice of calibration."
 ---
 
 This is the last piece in a series that started with how to push back on stakeholders and moved through artifacts, discovery, and the written rhythm. It ends with the question underneath all of it: why do two BAs who start with the same skills end up, five years later, in completely different places.

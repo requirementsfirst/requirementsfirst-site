@@ -10,7 +10,7 @@ tags:
   - craft
   - career
   - habits
-description: "Single artifacts win arguments. A weekly rhythm of written artifacts builds the kind of credibility that gets you asked for your read before decisions, not after. The format, the cadence, and why most BAs cannot sustain it."
+description: "The weekly writing habit that separates business analysts who advance from those who plateau. Predictions, patterns, revisions, and why most BAs cannot sustain it."
 ---
 
 The previous pieces in this series argued for one-page artifacts as the tool that earns BAs the right to push back. The artifact works in the moment. What changes a career is not the artifact but the rhythm.

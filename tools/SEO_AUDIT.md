@@ -47,3 +47,26 @@ This folds into the normal publishing step — it is **not** a separate audit ro
 | the-question-most-bas-forget-to-ask-before-opening-jira | optimized ("requirements gathering question ... before opening Jira") | **flag**: para 1 is a scenario (PM ping), no explicit keyword phrase — left as-is, manual review | **done** |
 
 Batch 1: the first two **done** rows (acceptance-criteria, ba-vs-po-vs-pm). Batch 2: the remaining six rows above. **The full evergreen SEO pass (all 8) is now complete.**
+
+## Batch 3 — series pieces with a searchable parent topic
+
+Five series pieces (#13–20) turned out to map onto a real, if lower-demand, searched parent topic. These got the same description-only treatment as the evergreen set. Demand is weaker than the evergreen batch, so the upside is smaller, but the cost is one frontmatter line each. Titles/slugs/bodies untouched.
+
+| Article (slug) | Optimized against (searchable parent topic) | Status |
+|---|---|---|
+| pushing-back-on-people-who-outrank-you | "how to push back on senior stakeholders / who outrank you" | **done** |
+| the-weekly-written-artifact-rhythm | "writing habit for business analysts / advance vs plateau" | **done** |
+| what-to-write-up-after-the-discovery-conversation | "how to document requirements after discovery" | **done** |
+| what-separates-bas-who-compound-from-bas-who-plateau | "how to grow a business analyst career / advance vs plateau" | **done** |
+| handling-stakeholder-resistance-to-questions | "how to handle difficult stakeholders who resist questions" | **done** |
+
+### Intentionally skipped (no meaningful search demand)
+
+These two series pieces were reviewed and **deliberately left unoptimized** — they are share-only. The "one-page artifact" framing is our own coinage, not a phrase anyone searches, and there is no adjacent high-volume parent topic worth bending the description toward:
+
+- **the-one-page-artifact-that-earns-the-right-to-push-back** — skipped
+- **when-the-one-page-artifact-is-the-wrong-tool** — skipped
+
+### Pass status
+
+**SEO on-page pass complete** across all evergreen articles (8) plus the viable series pieces (5). Remaining series pieces are share-only by design. Future evergreen articles fold the searchable title + description + first-paragraph keyword in at write time (see "Going forward" above); no further retroactive batches are planned.

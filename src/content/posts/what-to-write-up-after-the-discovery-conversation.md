@@ -10,7 +10,7 @@ tags:
   - discovery
   - documentation
   - craft
-description: "The discovery write-up is where most of the value from a good conversation leaks away. Too detailed and nobody reads it; too thin and it captures nothing. The format that survives, and the three things you should never write down."
+description: "How to document requirements after a discovery conversation: capture the findings, not just the notes. The format that survives, and three things you should never write down."
 ---
 
 The previous piece covered how to run a stakeholder discovery conversation. This one is about the hour after it, which is where most of the value leaks away.

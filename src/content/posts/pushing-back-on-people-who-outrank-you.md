@@ -10,7 +10,7 @@ tags:
   - business-analysis
   - craft
   - career
-description: "Pushing back on a peer is hard. Pushing back on someone three levels above you, with the team watching, is a different problem entirely. Most BA advice on stakeholder management quietly assumes the BA has equal standing. Real ones often don't."
+description: "How to push back on senior stakeholders who outrank you, without ending your career. The pre-meeting move, escalating risk not disagreement, and the calibration that earns trust."
 ---
 
 A BA I worked with told me about a meeting that broke her. The company's COO had walked into a backlog review and casually said, "We need to add SSO before the end of the quarter." She had been hired to interrogate requirements, not approve them. She started to ask the questions. The COO interrupted her with: "I've already decided. Let's not waste time."

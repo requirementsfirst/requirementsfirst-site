@@ -10,7 +10,7 @@ tags:
   - product-management
   - product-owner
   - career
-description: "Every article on this compares the three roles by their textbook definitions. None of them admit the truth: the boundaries are drawn by org politics and budget, not by any clean division of work. Here's how it actually plays out."
+description: "The real difference between a business analyst, product owner, and product manager, and who actually owns the outcome. Not another comparison table."
 ---
 
 Search "BA vs PO vs PM" and you get the same article fifteen times. A neat table. The BA gathers requirements. The PO owns the backlog. The PM owns the roadmap and the market. Everyone has a lane. Everyone is happy.

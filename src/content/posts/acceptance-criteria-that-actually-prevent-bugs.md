@@ -10,7 +10,7 @@ tags:
   - requirements
   - business-analysis
   - quality
-description: Most acceptance criteria are written to look thorough, not to prevent bugs. Here's what the criteria that actually catch defects look like, with twelve real examples annotated.
+description: "How to write acceptance criteria that prevent bugs, with examples. Most criteria verify the feature works, not that it solves the problem. Here's the difference."
 ---
 
 Open any backlog. Read the acceptance criteria on five stories.

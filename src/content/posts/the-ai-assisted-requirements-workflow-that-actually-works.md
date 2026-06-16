@@ -10,7 +10,7 @@ tags:
   - ai
   - workflow
   - craft
-description: "Most AI-assisted requirements work is just faster acceptance-criteria generation, which produces faster bad requirements. A workflow that actually works uses AI where it has leverage and stays out of where it doesn't. Three stages, with what to delegate and what to never delegate."
+description: "Using AI for requirements gathering: the workflow that works. Most AI requirements work just generates acceptance criteria faster, producing faster bad requirements. Three stages."
 ---
 
 I've watched BAs adopt AI tools over the last two years and noticed a pattern. The ones who use AI as a faster acceptance-criteria generator produce faster bad requirements. The ones who use AI as a thinking partner before they touch the AC produce something interesting. Same tools, opposite outcomes.

@@ -39,11 +39,11 @@ This folds into the normal publishing step — it is **not** a separate audit ro
 |---|---|---|---|
 | acceptance-criteria-that-actually-prevent-bugs | optimized | present ("acceptance criteria" in para 1) | **done** |
 | ba-vs-po-vs-pm-the-honest-difference | optimized | **flag**: para 1 uses BA/PO/PM abbreviations, not the full phrase "business analyst, product owner, and product manager" — left as-is, manual review | **done** |
-| invest-spidr-both-miss-the-point | original | — | pending |
-| the-requirements-document-is-dead | original | — | pending |
-| what-changed-about-being-a-ba-2020-2025 | original | — | pending |
-| the-ai-assisted-requirements-workflow-that-actually-works | original | — | pending |
-| how-to-actually-run-a-stakeholder-discovery-conversation | original | — | pending |
-| the-question-most-bas-forget-to-ask-before-opening-jira | original | — | pending |
+| invest-spidr-both-miss-the-point | optimized ("INVEST vs SPIDR for user stories") | present ("user stories" / INVEST / SPIDR in para 1) | **done** |
+| the-requirements-document-is-dead | optimized ("Is the requirements document dead?") | present ("requirements documents" in para 1) | **done** |
+| what-changed-about-being-a-ba-2020-2025 | optimized ("being a business analyst from 2020 to 2025") | present ("BA" / "five years" in para 1) | **done** |
+| the-ai-assisted-requirements-workflow-that-actually-works | optimized ("Using AI for requirements gathering") | present ("AI tools" / "acceptance-criteria" in para 1) | **done** |
+| how-to-actually-run-a-stakeholder-discovery-conversation | optimized ("How to run a stakeholder discovery conversation") | present ("stakeholder discovery conversations" in para 1) | **done** |
+| the-question-most-bas-forget-to-ask-before-opening-jira | optimized ("requirements gathering question ... before opening Jira") | **flag**: para 1 is a scenario (PM ping), no explicit keyword phrase — left as-is, manual review | **done** |
 
-Batch 1 (this commit): the two **done** rows. Remaining 6 are pending a later batch; their current frontmatter was captured in the batch-1 report.
+Batch 1: the first two **done** rows (acceptance-criteria, ba-vs-po-vs-pm). Batch 2: the remaining six rows above. **The full evergreen SEO pass (all 8) is now complete.**

@@ -10,7 +10,7 @@ tags:
   - career
   - ai-tools
   - requirements
-description: "Five years of change in the BA role: AI tools, async work, the rise of product ownership inside services firms. But the underlying craft barely moved. The BAs treating surface changes as the actual work are setting themselves up for a career problem."
+description: "What changed about being a business analyst from 2020 to 2025, and what AI didn't change. The surface shifted; the craft barely moved. Why that gap is a career risk."
 ---
 
 A senior BA at a services firm asked me last month what's changed about the job in the last five years. He'd been heads-down on client work since 2020 and was preparing for a career conversation. He wanted a clean list.

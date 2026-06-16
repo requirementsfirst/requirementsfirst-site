@@ -10,7 +10,7 @@ tags:
   - documentation
   - business-analysis
   - craft
-description: "The death of the BRD has been declared a hundred times. Agile killed it. Jira killed it. AI is about to kill it again. The truth is that documents didn't die. BAs stopped writing good ones, then blamed the format."
+description: "Is the requirements document dead? Agile, Jira, and AI each declared it. The truth: documents didn't die, BAs stopped writing good ones and blamed the format."
 ---
 
 A senior BA at a fintech told me recently that her team has stopped writing requirements documents. They use Jira tickets and Slack threads. The team velocity is great. The product, she added quietly, has been shipping the wrong things for nine months.

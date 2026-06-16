@@ -10,7 +10,7 @@ tags:
   - stakeholder-management
   - discovery
   - craft
-description: "Most BA training treats discovery conversations as a list of questions. The questions matter less than the structure of the conversation. The opening minute, the middle pivot, the close, and the five mistakes that turn a useful conversation into a status meeting."
+description: "How to run a stakeholder discovery conversation: the structure, not just the questions. The opening minute, the middle pivot, the close, and five mistakes that kill elicitation."
 ---
 
 A BA I worked with once told me she had run forty stakeholder discovery conversations in her first year and learned almost nothing from them. The questions had been fine. The notes had been thorough. The output documents had checked out with her manager. Yet six months later, when the projects she had scoped were running, she kept finding gaps that the conversations should have caught.

@@ -9,7 +9,7 @@ tags:
   - requirements
   - business-analysis
   - product-discovery
-description: Most requirements work starts with "what do they want?" That's the wrong first question. Here's the one that saves projects.
+description: "The requirements gathering question most BAs forget before opening Jira. \"What do they want?\" is the wrong first question. The one that actually validates a requirement."
 ---
 
 A product manager pings you. "We need to add bulk export to the reporting module. Can you write the stories by Thursday?"

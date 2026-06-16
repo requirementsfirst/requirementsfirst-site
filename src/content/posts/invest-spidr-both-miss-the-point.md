@@ -10,7 +10,7 @@ tags:
   - frameworks
   - business-analysis
   - requirements
-description: INVEST is older. SPIDR is newer. The endless debate about which is better misses a structural flaw both share. They tell you whether a story is well-formed. They don't tell you whether it's worth building.
+description: "INVEST vs SPIDR for user stories, and why both miss the point. They tell you whether a story is well-formed, not whether it is worth building. The structural flaw both share."
 ---
 
 Every BA has been in the conversation. Someone asks how to write better user stories. Someone else mentions INVEST. A more recently-trained colleague says SPIDR is better. The conversation becomes a debate about which acronym wins, which gets quoted in more certification courses, which fits Agile better.

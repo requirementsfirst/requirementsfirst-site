@@ -23,9 +23,37 @@ const sortedPosts = getSortedPosts(posts);
 const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
 const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 const homePath = getRelativeLocaleUrl(locale, "");
+
+// Homepage structured data: WebSite + Organization. Data-driven from the
+// site config so it stays in sync with title/url/description.
+const siteUrl = config.site.url;
+const homeStructuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: config.site.title,
+    url: siteUrl,
+    description: config.site.description,
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: config.site.title,
+    url: siteUrl,
+    description: config.site.description,
+    logo: new URL("favicon.svg", siteUrl).href,
+  },
+];
 ---
 
 <Layout>
+  <Fragment slot="head">
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(homeStructuredData)}
+    />
+  </Fragment>
   <Header />
   <main
     id="main-content"

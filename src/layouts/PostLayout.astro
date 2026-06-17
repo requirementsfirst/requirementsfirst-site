@@ -16,11 +16,22 @@ const { site } = config;
 const { title, description, ogImage, canonicalURL, pubDatetime, modDatetime } =
   Astro.props;
 
+// Resolve a reliable page URL: prefer the explicit canonical, else the
+// current path against the configured site. Used for both `url` and
+// `mainEntityOfPage` in the BlogPosting schema.
+const pageURL = canonicalURL ?? new URL(Astro.url.pathname, Astro.site).href;
+
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   headline: title ?? site.title,
+  ...(description && { description }),
   image: ogImage,
+  url: pageURL,
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": pageURL,
+  },
   ...(pubDatetime && { datePublished: pubDatetime.toISOString() }),
   ...(modDatetime && { dateModified: modDatetime.toISOString() }),
   author: [

@@ -59,8 +59,33 @@ if (!fmMatch) {
 }
 const frontmatter = fmMatch[1];
 // Preserve the body verbatim; only drop leading blank lines after the
-// closing delimiter. No other content is stripped.
-const body = fmMatch[2].replace(/^[ \t]*\r?\n+/, "");
+// closing delimiter.
+const rawBody = fmMatch[2].replace(/^[ \t]*\r?\n+/, "");
+
+// Strip the site-specific closing teaser. RF articles end with an italic
+// "Subscribe below ..." paragraph that points at the on-site newsletter
+// form; that makes no sense on Dev.to. Conservative: only act when the
+// FINAL paragraph contains the phrase "subscribe below" (case-insensitive).
+// When that teaser sat behind a trailing `---` thematic break (its visual
+// separator), the now-dangling rule is removed too so the post does not
+// end on a stray horizontal line. Anything else is left untouched.
+function stripTeaser(md) {
+  const trimmed = md.replace(/\s+$/, "");
+  const lastBlankIdx = trimmed.lastIndexOf("\n\n");
+  const lastBlock =
+    lastBlankIdx === -1 ? trimmed : trimmed.slice(lastBlankIdx + 2);
+  if (!/subscribe below/i.test(lastBlock)) {
+    return { body: md, stripped: false };
+  }
+  let head = lastBlankIdx === -1 ? "" : trimmed.slice(0, lastBlankIdx);
+  head = head.replace(/\s+$/, "");
+  // Drop a trailing thematic break (---/***/___) that only existed to set
+  // off the teaser.
+  head = head.replace(/(?:\n|^)(?:-{3,}|\*{3,}|_{3,})\s*$/, "");
+  return { body: head.replace(/\s+$/, "") + "\n", stripped: true };
+}
+
+const { body, stripped: teaserStripped } = stripTeaser(rawBody);
 
 // Minimal frontmatter field reader: single-line `key: value`, tolerating
 // double- or single-quoted values and \" escapes inside double quotes.
@@ -154,17 +179,26 @@ console.log(`  url:           ${json?.url}`);
 console.log(
   `  tags:          ${JSON.stringify(json?.tags ?? json?.tag_list ?? tags)}`
 );
-console.log(`  body submitted: ${body.length} chars`);
+console.log(`  body pre-strip:  ${rawBody.length} chars`);
+console.log(
+  `  body submitted:  ${body.length} chars ${
+    teaserStripped
+      ? `(teaser stripped, -${rawBody.length - body.length} chars)`
+      : "(no teaser found; posted as-is)"
+  }`
+);
 if (typeof json?.body_markdown === "string") {
   const ok = json.body_markdown.length === body.length;
   console.log(
-    `  body returned:  ${json.body_markdown.length} chars ${
-      ok ? "(matches — no truncation)" : "(DIFFERS — inspect for truncation)"
+    `  body returned:   ${json.body_markdown.length} chars ${
+      ok
+        ? "(matches submitted — no truncation)"
+        : "(DIFFERS from submitted — inspect for truncation)"
     }`
   );
 } else {
   console.log(
-    "  body returned:  (not echoed by create response; verify in the draft editor)"
+    "  body returned:   (not echoed by create response; verify in the draft editor)"
   );
 }
 console.log("");

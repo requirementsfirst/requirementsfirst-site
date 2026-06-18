@@ -126,7 +126,14 @@ function sanitizeTags(tags) {
   return out;
 }
 
-const tags = sanitizeTags(["ai", "productivity", "career", "business"]);
+// Tags default to a generic set but can be overridden per article via the
+// DEVTO_TAGS env var (comma-separated), e.g. for a career/craft piece vs an
+// AI piece. Keeps tag choice out of the script body, no per-article edits.
+const defaultTags = ["ai", "productivity", "career", "business"];
+const tagSource = process.env.DEVTO_TAGS
+  ? process.env.DEVTO_TAGS.split(",")
+  : defaultTags;
+const tags = sanitizeTags(tagSource);
 const canonicalUrl = `https://requirementsfirst.com/posts/${slug}/`;
 
 const payload = {

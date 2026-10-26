@@ -9,7 +9,7 @@ tags:
   - business-analysis
   - requirements
   - craft
-description: "Business requirements vs functional requirements, explained with examples. Most definitions get the distinction technically right and practically useless. Here is the difference that actually changes how you work."
+description: "Business requirements vs functional requirements, explained with examples, and the difference that actually changes how a BA works."
 ---
 
 The difference between business requirements and functional requirements is one of the most searched questions in business analysis, and most of the answers are technically correct and practically useless. They tell you a business requirement is the "what and why" and a functional requirement is the "how." True, and it does not help you the next time you are staring at a stakeholder request trying to figure out which is which.
@@ -30,7 +30,7 @@ The reason this matters is not academic tidiness. It is that business requiremen
 
 When you write a functional requirement and call it a business requirement, you smuggle a solution into the problem statement before anyone has validated the problem. "We need an automated re-engagement email" sounds like a business need, but it is a solution wearing a business need's clothes. Someone already decided email is the answer. The actual business requirement, reducing churn, might be better served by a dozen other things. By writing the functional requirement first, you have quietly closed off those options and nobody noticed.
 
-When you write a business requirement and stop there, calling it done, you hand engineering an outcome with no specification. "Reduce churn by 15 percent" is not buildable. Engineering needs to know what the system does. If the requirements document stops at the business level, the functional decisions get made ad hoc during development, by whoever is closest to the keyboard, usually without the stakeholder in the room.
+When you write a business requirement and stop there, calling it done, you hand engineering an outcome with no specification. "Reduce churn by 15 percent" is not buildable. Engineering needs to know what the system does. If [the requirements document stops](/posts/the-requirements-document-is-dead/) at the business level, the functional decisions get made ad hoc during development, by whoever is closest to the keyboard, usually without the stakeholder in the room.
 
 Both failures come from not knowing which type you are writing. The distinction is the thing that keeps you from making either mistake.
 

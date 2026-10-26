@@ -10,10 +10,10 @@ tags:
   - career
   - craft
   - judgement
-description: "How to grow a business analyst career: what separates BAs who advance from those who plateau. Not talent or luck, but a specific, repeatable practice of calibration."
+description: "What separates business analysts who advance from those who plateau. Not talent or luck, but a specific, repeatable practice of calibration."
 ---
 
-This is the last piece in a series that started with how to push back on stakeholders and moved through artifacts, discovery, and the written rhythm. It ends with the question underneath all of it: why do two BAs who start with the same skills end up, five years later, in completely different places.
+This is the last piece in a series that started with [how to push back on stakeholders](/posts/pushing-back-on-people-who-outrank-you/) and moved through artifacts, discovery, and the written rhythm. It ends with the question underneath all of it: why do two BAs who start with the same skills end up, five years later, in completely different places.
 
 I have watched this happen enough times to be sure it is not talent and not luck. The BA who compounds and the BA who plateaus are usually indistinguishable in year one. By year five the gap is enormous and nearly impossible to close. Something happened in between, repeatedly, that almost nobody can see while it is happening.
 
@@ -53,7 +53,7 @@ The plateauing BA never builds the calibration, because they spent the invisible
 
 Here is the cruel part. For the first two or three years, the two BAs look similar to everyone including themselves. The compounding BA often feels like they are falling behind, because the plateauing BA has more visible output and gets praised for it. The compounding investments feel like a tax with no return.
 
-Then, somewhere around year three or four, the curves separate visibly. The compounding BA starts being right about things before anyone else. Their one-pagers start landing because they have learned, through two hundred reps, exactly how to frame a concern so a senior person hears it. Their discovery conversations surface things others miss because they have traced enough bad conversations to know where the bodies are buried. Senior people start asking for them by name.
+Then, somewhere around year three or four, the curves separate visibly. The compounding BA starts being right about things before anyone else. [Their one-pagers](/posts/the-one-page-artifact-that-earns-the-right-to-push-back/) start landing because they have learned, through two hundred reps, exactly how to frame a concern so a senior person hears it. Their discovery conversations surface things others miss because they have traced enough bad conversations to know where the bodies are buried. Senior people start asking for them by name.
 
 The plateauing BA, at the same moment, starts to feel stuck without understanding why. They are doing everything they did in year one, which worked in year one, and it is no longer producing advancement. They often conclude the problem is politics, or their manager, or the company, and they leave for a similar role elsewhere, where the same pattern repeats.
 
@@ -73,7 +73,7 @@ The third is that it is uncomfortable. Checking your old predictions means confr
 
 If you are a BA in your first year or two, the entire content of this series reduces to one instruction: spend some of the invisible time on calibration, every week, even though it will feel pointless for a long time.
 
-The specific practices are in the earlier pieces. Write predictions and check them. Keep the weekly artifact. Trace bad conversations. Review shipped work. Build the one-pagers and watch how they land. None of it is complicated. All of it is uncomfortable and slow to pay off, which is exactly why it remains rare, which is exactly why it remains valuable.
+The specific practices are in the earlier pieces. Write predictions and check them. [Keep the weekly artifact](/posts/the-weekly-written-artifact-rhythm/). Trace bad conversations. Review shipped work. Build the one-pagers and watch how they land. None of it is complicated. All of it is uncomfortable and slow to pay off, which is exactly why it remains rare, which is exactly why it remains valuable.
 
 The BAs who do this do not have more talent than the ones who do not. They have a higher tolerance for delayed, invisible, uncomfortable work. That tolerance is the entire moat.
 

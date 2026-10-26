@@ -10,10 +10,10 @@ tags:
   - frameworks
   - business-analysis
   - requirements
-description: "INVEST vs SPIDR for user stories, and why both miss the point. They tell you whether a story is well-formed, not whether it is worth building. The structural flaw both share."
+description: "INVEST vs SPIDR for user stories: both tell you whether a story is well-formed, not whether it is worth building. The flaw they share."
 ---
 
-Every BA has been in the conversation. Someone asks how to write better user stories. Someone else mentions INVEST. A more recently-trained colleague says SPIDR is better. The conversation becomes a debate about which acronym wins, which gets quoted in more certification courses, which fits Agile better.
+Every BA has been in the conversation. Someone asks [how to write better user stories](/posts/writing-better-user-stories-wrong-goal/). Someone else mentions INVEST. A more recently-trained colleague says SPIDR is better. The conversation becomes a debate about which acronym wins, which gets quoted in more certification courses, which fits Agile better.
 
 The debate is a waste of time. Not because the frameworks are bad — they're both fine for what they do. The debate is a waste because both frameworks share a structural blind spot, and arguing about which one is sharper doesn't fix the blind spot.
 

@@ -10,7 +10,7 @@ tags:
   - requirements
   - business-analysis
   - craft
-description: "How to handle difficult stakeholders who resist your questions. Four types of resistance, five tactics, and why pushback usually means you asked the right question."
+description: "How to handle stakeholders who resist your questions: four types of resistance, five tactics, and why pushback often means you asked the right one."
 ---
 
 A BA I respect told me last month that the five-question approach to requirements doesn't work in her org. The questions are fine, she said. The problem is that her stakeholders refuse to answer them. They take the request as adversarial. They escalate. They go to her manager. They say "just build what I asked for, why are you making this hard."
@@ -39,7 +39,7 @@ The most common mistake is asking the questions verbally, in real time, to the s
 
 Better: write the artifact yourself, with your best guess at the five answers, and send it to the stakeholder for review. Now the questions aren't questions — they're claims you've made about their request. They can correct your claims or leave them. The cognitive load shifts from "answer this BA's interrogation" to "fix what they got wrong about my request."
 
-Example. Instead of asking the Sales VP, "Who specifically would use the customer health score dashboard and how often?", you send her a one-pager that opens: "Based on our conversation, the primary user is you, for your weekly Friday account review. The CSMs would consult it secondarily but their existing spreadsheets handle most of the same view." Now she either confirms, or corrects ("Actually, I want the CSMs to use it as their primary view"), or — most usefully — pauses, because seeing the claim laid out makes her realise she hadn't actually thought about who the user is.
+Example. Instead of asking the Sales VP, "Who specifically would use the customer health score dashboard and how often?", you send her [a one-pager](/posts/the-one-page-artifact-that-earns-the-right-to-push-back/) that opens: "Based on our conversation, the primary user is you, for your weekly Friday account review. The CSMs would consult it secondarily but their existing spreadsheets handle most of the same view." Now she either confirms, or corrects ("Actually, I want the CSMs to use it as their primary view"), or — most usefully — pauses, because seeing the claim laid out makes her realise she hadn't actually thought about who the user is.
 
 This works on three of the four resistance types. It doesn't help with the political-reasons case, but the other three soften considerably when the questions become claims.
 
@@ -67,7 +67,7 @@ Most stakeholders accept this because the cost is small. Ninety minutes of analy
 
 ## Tactic four: escalate the right kind of disagreement
 
-Sometimes the resistance is genuine and irreducible. The stakeholder believes the solution is right, you believe it isn't, and the five questions haven't moved either of you. At this point, the temptation is to keep arguing. Don't.
+Sometimes the resistance is genuine and irreducible. The stakeholder believes the solution is right, you believe it isn't, and [the five questions](/posts/five-questions-three-worked-examples/) haven't moved either of you. At this point, the temptation is to keep arguing. Don't.
 
 Instead, write the artifact with both views included. "Stakeholder believes the correct approach is X for reasons Y. Analysis suggests Z for reasons W. Recommend X be built with explicit success criteria; if criteria aren't met within Q time, we'll revisit." Send it up the chain to whoever owns the decision — usually the stakeholder's manager or the product owner.
 

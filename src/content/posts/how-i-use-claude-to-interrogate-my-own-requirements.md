@@ -10,7 +10,7 @@ tags:
   - claude
   - requirements
   - workflow
-description: I write the requirement. Claude tears it apart. I rewrite. The version that goes to engineering is roughly the fifth draft, and they ask half the questions they used to.
+description: "I write the requirement, Claude tears it apart, I rewrite. By the fifth draft, engineering asks half the questions they used to. Here is the method."
 ---
 
 Most BAs I know use ChatGPT or Claude for the wrong thing.
@@ -29,7 +29,7 @@ I use Claude for this because the long-context handling is better than ChatGPT f
 
 **Step 1: Write the requirement in prose first.**
 
-Not as a user story. Not as acceptance criteria. As a paragraph or two, in normal English, like you're explaining it to a senior colleague over coffee. Who's affected, what's broken, what changes if we ship, what changes if we don't. This forces the thinking that the template hides.
+[Not as a user story](/posts/as-a-user-i-want-to-worst-thing-user-stories/). Not as acceptance criteria. As a paragraph or two, in normal English, like you're explaining it to a senior colleague over coffee. Who's affected, what's broken, what changes if we ship, what changes if we don't. This forces the thinking that the template hides.
 
 If you can't write the prose version, you don't have a requirement. You have a feature request. Stop and go find the trigger.
 

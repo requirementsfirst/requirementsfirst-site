@@ -10,7 +10,7 @@ tags:
   - requirements
   - business-analysis
   - quality
-description: "How to write acceptance criteria that prevent bugs, with examples. Most criteria verify the feature works, not that it solves the problem. Here's the difference."
+description: "How to write acceptance criteria that prevent bugs, with 12 examples. Most criteria check the feature works, not that it solves the problem."
 ---
 
 Open any backlog. Read the acceptance criteria on five stories.
@@ -24,7 +24,7 @@ You'll see lists like this:
 
 This is the acceptance criteria style that 80% of BAs write. It looks thorough. It will not catch a single bug that wouldn't have been caught anyway.
 
-The reason is simple: these criteria describe what the feature *does*, not what could go *wrong*. They are a checklist for the happy path. The bugs that ship to production live in the unhappy path, the boundary conditions, the race conditions, and the assumptions that nobody wrote down because they felt obvious.
+The reason is simple: these criteria describe what the feature *does*, not what could go *wrong*. They are a checklist for the happy path. The bugs that ship to production live in the unhappy path, the boundary conditions, the race conditions, and [the assumptions that nobody wrote down](/posts/assumption-log-template-for-business-analysts/) because they felt obvious.
 
 Acceptance criteria that actually prevent bugs are different. They name the failures.
 

@@ -2,7 +2,7 @@
 title: "Writing better user stories is the wrong goal. Here's what to optimise for instead."
 author: Arun Mehta
 pubDatetime: 2026-05-23T10:00:00+05:30
-description: "There's a quiet epidemic in IT services teams. Business analysts and product owners are getting better at writing user stories. The stories are well-structured. They follow the template. They have crisp acceptance criteria. They pass every review. And the projects are still failing."
+description: "BAs write better user stories than ever: well-structured, crisp acceptance criteria, every review passed. Projects still fail. What to optimise for."
 featured: true
 draft: false
 tags:
@@ -11,13 +11,13 @@ tags:
   - ba-craft
 ---
 
-There's a quiet epidemic in IT services teams. Business analysts and product owners are getting better at writing user stories. The stories are well-structured. They follow the template. They have crisp acceptance criteria. They pass every review.
+There's a quiet epidemic in IT services teams. Business analysts and product owners are getting better at writing user stories. The stories are well-structured. They follow the template. They have [crisp acceptance criteria](/posts/acceptance-criteria-that-actually-prevent-bugs/). They pass every review.
 
 And the projects are still failing.
 
 Not failing-failing. Failing in the slow way. Features ship that nobody uses. Stakeholders ask for changes the week after release. Engineering quietly rebuilds half the work in the next sprint. Everyone's busy. Nobody's confused. The retrospective lists "communication gaps" as the cause, again.
 
-I've spent eight years on the receiving end of vague business requirements. I've written probably four thousand user stories. I've also worked next to BAs who write fewer and slower than I do, and whose projects somehow keep landing on time with stakeholders who stay happy. The pattern took me three years to see clearly.
+I've spent eight years on the receiving end of [vague business requirements](/posts/business-requirements-vs-functional-requirements/). I've written probably four thousand user stories. I've also worked next to BAs who write fewer and slower than I do, and whose projects somehow keep landing on time with stakeholders who stay happy. The pattern took me three years to see clearly.
 
 It is not about writing stories. It is about understanding the problem.
 

@@ -10,10 +10,10 @@ tags:
   - discovery
   - documentation
   - craft
-description: "How to document requirements after a discovery conversation: capture the findings, not just the notes. The format that survives, and three things you should never write down."
+description: "How to document requirements after a discovery conversation: capture findings, not notes. The format that survives, and three things never to write."
 ---
 
-The previous piece covered how to run a stakeholder discovery conversation. This one is about the hour after it, which is where most of the value leaks away.
+The previous piece covered [how to run a stakeholder discovery conversation](/posts/how-to-actually-run-a-stakeholder-discovery-conversation/). This one is about the hour after it, which is where most of the value leaks away.
 
 A good discovery conversation produces two things: a set of notes, and a set of impressions. The notes are easy to write up and largely worthless. The impressions are hard to write up and contain almost everything that mattered. Most BAs write up the notes, discard the impressions, and wonder six weeks later why the requirements feel hollow.
 
@@ -55,7 +55,7 @@ This is the part no BA training covers, and it is the part that separates BAs wh
 
 **Two: never write down a conclusion you have not yet earned the right to state.** Early in a discovery cycle you will form strong hypotheses. Writing them as conclusions, before you have the evidence, creates a record that you committed to a position prematurely. When the position turns out wrong, the record shows you jumped. Keep premature conclusions as private hypotheses until the evidence catches up.
 
-**Three: never write down anything that assumes a decision the stakeholder has not made.** If the stakeholder is still deciding whether to fund the project, a write-up that describes scope and acceptance criteria assumes the funding decision. That assumption, in writing, can box the stakeholder into a commitment they had not made, which they will resent. Write what was discussed, not what you are hoping they will decide.
+**Three: never write down anything that assumes a decision the stakeholder has not made.** If the stakeholder is still deciding whether to fund the project, a write-up that describes scope and acceptance criteria assumes the funding decision. [That assumption, in writing](/posts/assumption-log-template-for-business-analysts/), can box the stakeholder into a commitment they had not made, which they will resent. Write what was discussed, not what you are hoping they will decide.
 
 ## Why the impressions matter more than the notes
 

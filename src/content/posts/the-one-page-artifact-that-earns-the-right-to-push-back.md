@@ -10,10 +10,10 @@ tags:
   - stakeholder-management
   - craft
   - templates
-description: "Most BA templates organise content. The one-pager that lets you push back on a senior stakeholder organises judgement. Here is the exact format, the order of sections, and the moves that make it land instead of feel adversarial."
+description: "The one-page format that lets a BA push back on a senior stakeholder: the sections, their order, and the moves that keep it from feeling adversarial."
 ---
 
-The previous piece argued that pushing back on senior stakeholders only works when you bring a written artifact to the conversation, not a list of questions. This piece is about how to write that artifact.
+The previous piece argued that [pushing back on senior stakeholders](/posts/pushing-back-on-people-who-outrank-you/) only works when you bring a written artifact to the conversation, not a list of questions. This piece is about how to write that artifact.
 
 This is not a template piece in the boring sense. Most BA templates fail because they organise information. The right artifact organises judgement — yours, the stakeholder's, and the team's — into a form that makes the disagreement legible without making it personal.
 
@@ -117,4 +117,4 @@ That is the actual goal. Not winning the one decision. Becoming the person whose
 
 ---
 
-*The next piece in this series looks at when the one-page artifact is the wrong tool — the cases where a longer-form analysis, a meeting, or just silence is the right move instead. Subscribe below to get it.*
+*The next piece in this series looks at [when the one-page artifact is the wrong tool](/posts/when-the-one-page-artifact-is-the-wrong-tool/) — the cases where a longer-form analysis, a meeting, or just silence is the right move instead. Subscribe below to get it.*

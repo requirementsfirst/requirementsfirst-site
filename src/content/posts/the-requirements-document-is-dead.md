@@ -17,7 +17,7 @@ A senior BA at a fintech told me recently that her team has stopped writing requ
 
 She wasn't sure if the two were connected. They are. They almost always are.
 
-The death of the requirements document has been declared roughly every five years since 2005. Agile killed it. Then Scrum killed it. Then Jira killed it. Then design tools like Figma killed it. Now AI is killing it again — why write a document when Claude can generate one in thirty seconds? Each declaration of death came with the same logic: documents are heavy, nobody reads them, they go out of date, they don't ship code.
+The death of the requirements document has been declared roughly every five years since 2005. Agile killed it. Then Scrum killed it. Then Jira killed it. Then design tools like Figma killed it. Now AI is killing it again — why write a document when [Claude can generate one in thirty seconds](/posts/how-i-use-claude-to-interrogate-my-own-requirements/)? Each declaration of death came with the same logic: documents are heavy, nobody reads them, they go out of date, they don't ship code.
 
 The logic isn't wrong. It's incomplete. Heavy unread documents are bad. But the alternative most teams adopted isn't lightweight thinking captured in lightweight artifacts. It's no thinking captured in artifacts that have no context. That's not progress.
 
@@ -30,7 +30,7 @@ A real requirements document was never primarily a record. It was a forcing func
 - Decide who was actually affected by the problem
 - Articulate what they were doing today and why it didn't work
 - State the outcome you expected if the change shipped
-- Name the assumptions you were making
+- [Name the assumptions you were making](/posts/assumption-log-template-for-business-analysts/)
 - Identify the questions you didn't have answers to
 
 The artifact had value, but the writing was the work. You couldn't write a good requirements section without doing the thinking it required. The document was the evidence that the thinking had happened.
@@ -41,7 +41,7 @@ What got killed was the writing-as-forcing-function ritual. The artifact was aba
 
 ## The artifact is fine. The discipline is what slipped.
 
-Here's the part most "death of the BRD" essays get wrong. The modern formats that replaced BRDs are not the problem. A well-written Jira epic is a requirements document. A feature canvas is a requirements document. A Notion product brief is a requirements document. A one-pager in Google Docs is a requirements document. The container is incidental.
+Here's the part most "death of the BRD" essays get wrong. The modern formats that replaced BRDs are not the problem. A well-written Jira epic is a requirements document. A feature canvas is a requirements document. A Notion product brief is a requirements document. [A one-pager in Google Docs](/posts/the-one-page-artifact-that-earns-the-right-to-push-back/) is a requirements document. The container is incidental.
 
 What matters is whether the artifact, in whatever format, contains the actual thinking. The same five things the old BRDs forced — who, what's broken, what changes, what we don't know, what we're committing to — can be captured in a feature canvas, a Jira epic description, a Notion page, or four well-written paragraphs. The form factor doesn't determine quality. The discipline of the writer does.
 

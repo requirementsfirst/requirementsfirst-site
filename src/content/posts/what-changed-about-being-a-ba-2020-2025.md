@@ -10,7 +10,7 @@ tags:
   - career
   - ai-tools
   - requirements
-description: "What changed about being a business analyst from 2020 to 2025, and what AI didn't change. The surface shifted; the craft barely moved. Why that gap is a career risk."
+description: "What changed about being a business analyst from 2020 to 2025, and what AI didn't. The surface shifted, the craft barely moved, and that gap is a risk."
 ---
 
 A senior BA at a services firm asked me last month what's changed about the job in the last five years. He'd been heads-down on client work since 2020 and was preparing for a career conversation. He wanted a clean list.
@@ -21,7 +21,7 @@ The clean list exists. Five things changed visibly. Three things didn't change a
 
 **One. AI tools became normal in the workflow.** In 2020 a BA who used GPT-style tools at work was rare and slightly suspicious. By 2024 it was standard. Claude, ChatGPT, Notion AI, Miro AI — most BAs now use at least one daily. The companies that banned them in 2023 quietly unbanned them in 2024. The shift happened faster than any previous tool adoption I've watched.
 
-What the tools are actually used for, honestly: drafting acceptance criteria first-pass, summarising stakeholder transcripts, generating user-story candidates from prose, restructuring rambling requirements documents, and producing meeting notes. Not requirements analysis itself. Mostly the boring documentation overhead that used to eat a third of the week.
+What the tools are actually used for, honestly: [drafting acceptance criteria](/posts/acceptance-criteria-that-actually-prevent-bugs/) first-pass, summarising stakeholder transcripts, generating user-story candidates from prose, [restructuring rambling requirements documents](/posts/the-requirements-document-is-dead/), and producing meeting notes. Not requirements analysis itself. Mostly the boring documentation overhead that used to eat a third of the week.
 
 **Two. Async work permanently changed how requirements get captured.** Remote and hybrid teams meant that the spoken stakeholder workshop became the recorded one, then the Loom video, then often nothing — replaced by Slack threads and shared documents. Requirements gathering got faster and noisier. Fewer formal workshops, more continuous capture across channels.
 
@@ -45,7 +45,7 @@ The good BAs adapted by treating Slack and Loom as raw input that needs analysis
 
 Here's the actual point of this piece. The gap between "what changed" and "what didn't" is widening, and most BAs are on the wrong side of it.
 
-A BA who has spent five years getting better at the surface changes — faster AI-assisted documentation, more tool fluency, better Slack-thread synthesis — has a CV that looks current. They can write the right keywords. They can talk about AI tools confidently in interviews. They've earned a few certifications in the new tools their company uses.
+A BA who has spent five years getting better at the surface changes — [faster AI-assisted documentation](/posts/the-ai-assisted-requirements-workflow-that-actually-works/), more tool fluency, better Slack-thread synthesis — has a CV that looks current. They can write the right keywords. They can talk about AI tools confidently in interviews. They've earned a few certifications in the new tools their company uses.
 
 What they have not done is gotten meaningfully better at the underlying craft. Their problem-understanding is the same level it was in 2020. Their ability to interrogate a requirement is the same. Their stakeholder management is the same. They are faster at producing documents that nobody reads with the same level of insight as before.
 

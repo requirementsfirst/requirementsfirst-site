@@ -10,7 +10,7 @@ tags:
   - stakeholder-management
   - discovery
   - craft
-description: "How to run a stakeholder discovery conversation: the structure, not just the questions. The opening minute, the middle pivot, the close, and five mistakes that kill elicitation."
+description: "How to run a stakeholder discovery conversation: the opening minute, the middle pivot, the close, and five mistakes that kill elicitation."
 ---
 
 A BA I worked with once told me she had run forty stakeholder discovery conversations in her first year and learned almost nothing from them. The questions had been fine. The notes had been thorough. The output documents had checked out with her manager. Yet six months later, when the projects she had scoped were running, she kept finding gaps that the conversations should have caught.
@@ -83,7 +83,7 @@ To close, the failure modes worth naming explicitly.
 
 **Three.** Filling silence. After a stakeholder finishes a thought, most BAs fill the next two seconds with a follow-up. The two seconds of silence are exactly when the stakeholder adds the most useful sentence they had not planned to say.
 
-**Four.** Confirming too quickly. If the stakeholder says "yes, exactly," and you move on, you have just installed a misunderstanding into the requirements document. Ask "can you say more about what exactly looks like for you" before accepting any "yes."
+**Four.** Confirming too quickly. If the stakeholder says "yes, exactly," and you move on, you have just installed a misunderstanding [into the requirements document](/posts/the-requirements-document-is-dead/). Ask "can you say more about what exactly looks like for you" before accepting any "yes."
 
 **Five.** Skipping the close question. The biggest difference between a discovery conversation that produces a real requirement and one that produces a status update is whether the stakeholder leaves thinking about the project differently than they came in. The close question is what makes that happen.
 
@@ -97,4 +97,4 @@ The structure is small. The questions are not the point. The opening minute, the
 
 ---
 
-*The next piece moves from the conversation to what to write up after it — the format of the discovery artifact, how detailed it should be, and what should never be written down. Subscribe below to get it.*
+*The next piece moves from the conversation to [what to write up after it](/posts/what-to-write-up-after-the-discovery-conversation/) — the format of the discovery artifact, how detailed it should be, and what should never be written down. Subscribe below to get it.*

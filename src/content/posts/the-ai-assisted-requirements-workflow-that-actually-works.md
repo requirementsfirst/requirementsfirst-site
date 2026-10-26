@@ -10,12 +10,12 @@ tags:
   - ai
   - workflow
   - craft
-description: "Using AI for requirements gathering: the workflow that works. Most AI requirements work just generates acceptance criteria faster, producing faster bad requirements. Three stages."
+description: "Using AI for requirements gathering without producing bad requirements faster. A three-stage workflow that puts the thinking before the generating."
 ---
 
 I've watched BAs adopt AI tools over the last two years and noticed a pattern. The ones who use AI as a faster acceptance-criteria generator produce faster bad requirements. The ones who use AI as a thinking partner before they touch the AC produce something interesting. Same tools, opposite outcomes.
 
-This piece is the workflow that produces the second outcome. It is not theoretical. It is what the BAs I respect actually do when they sit down with a new stakeholder request and an open Claude or ChatGPT window.
+This piece is the workflow that produces the second outcome. It is not theoretical. It is what the BAs I respect actually do when they sit down with a new stakeholder request and [an open Claude or ChatGPT window](/posts/how-i-use-claude-to-interrogate-my-own-requirements/).
 
 Three stages, in order. Each stage has a clear thing AI is good at and a clear thing it is not.
 
@@ -23,7 +23,7 @@ Three stages, in order. Each stage has a clear thing AI is good at and a clear t
 
 The first hour after a stakeholder request lands is the highest-leverage time in the entire requirements process. It is also the time most BAs skip, because the request "feels clear" and the temptation is to start scoping.
 
-The AI's job in this stage is to be opposition. You paste the request verbatim and ask: "Read this request as a hostile reviewer. What is unstated. What contradiction is hiding. What assumption is the stakeholder making that they have not named."
+The AI's job in this stage is to be opposition. You paste the request verbatim and ask: "Read this request as a hostile reviewer. What is unstated. What contradiction is hiding. [What assumption is the stakeholder making](/posts/assumption-log-template-for-business-analysts/) that they have not named."
 
 The model will produce a list. Most items on the list will be wrong or trivial. But two or three items will be real. Those are the questions you bring to the stakeholder before scoping.
 

@@ -10,10 +10,10 @@ tags:
   - stakeholder-management
   - craft
   - judgement
-description: "The one-page push-back artifact is a tool. Like every tool, it has cases where it makes things worse. Three situations where reaching for it signals you have misread the room, and what to do instead."
+description: "The one-page push-back artifact makes things worse in three situations. How to tell you have misread the room, and what to do instead."
 ---
 
-The previous piece argued for a one-page artifact as the format that earns a BA the right to push back on senior stakeholders. The format works in most situations. It does not work in all of them.
+The previous piece argued for [a one-page artifact as the format](/posts/the-one-page-artifact-that-earns-the-right-to-push-back/) that earns a BA the right to push back on senior stakeholders. The format works in most situations. It does not work in all of them.
 
 This piece is about the situations where reaching for the one-pager is itself the mistake. Three cases, each with a different fix.
 
@@ -81,4 +81,4 @@ The artifact is a tool. The judgement of when to use it is the craft. Don't mist
 
 ---
 
-*The next piece in this series moves from the individual artifact to the rhythm: how the BAs who advance build a system of weekly written artifacts that compound credibility over a quarter, not a single meeting. Subscribe below to get it.*
+*The next piece in this series moves from the individual artifact to the rhythm: how the BAs who advance build a system of [weekly written artifacts](/posts/the-weekly-written-artifact-rhythm/) that compound credibility over a quarter, not a single meeting. Subscribe below to get it.*

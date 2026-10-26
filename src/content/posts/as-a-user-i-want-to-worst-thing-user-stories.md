@@ -110,4 +110,4 @@ Then, if your tools require a template, fill in the blanks at the end. It will t
 
 ---
 
-*The next piece in this series breaks down how to interrogate your own requirements with Claude before showing them to engineering. Subscribe below to get it.*
+*The next piece in this series breaks down how to [interrogate your own requirements with Claude](/posts/how-i-use-claude-to-interrogate-my-own-requirements/) before showing them to engineering. Subscribe below to get it.*

@@ -9,7 +9,7 @@ tags:
   - requirements
   - business-analysis
   - product-discovery
-description: "The requirements gathering question most BAs forget before opening Jira. \"What do they want?\" is the wrong first question. The one that actually validates a requirement."
+description: "\"What do they want?\" is the wrong first requirements question. The one most BAs forget before opening Jira, and how it validates the request."
 ---
 
 A product manager pings you. "We need to add bulk export to the reporting module. Can you write the stories by Thursday?"
@@ -18,7 +18,7 @@ What do most BAs do next? Open Jira. Start drafting. Maybe ping the PM with a cl
 
 This is the moment the project quietly goes wrong.
 
-The question you should ask first — before Jira, before stories, before acceptance criteria — is this:
+The question you should ask first — before Jira, before stories, [before acceptance criteria](/posts/acceptance-criteria-that-actually-prevent-bugs/) — is this:
 
 **Why now?**
 
@@ -40,7 +40,7 @@ In every case, the stated requirement was buildable. In every case, building it 
 
 When you understand why a request is happening now, you learn:
 
-**One. The actual problem.** The trigger reveals the constraint or pain that's pushing this request forward. The stated requirement is one solution to that problem. There are usually others, and some are cheaper.
+**One. The actual problem.** The trigger reveals the constraint or pain that's pushing this request forward. The stated requirement is [one solution to that problem](/posts/business-requirements-vs-functional-requirements/). There are usually others, and some are cheaper.
 
 **Two. The deadline that's real.** Most "by end of quarter" deadlines are aspirational. Some are tied to a contract, a board meeting, a regulator, or a competitor launch. Those are real. Knowing the difference changes how you scope.
 

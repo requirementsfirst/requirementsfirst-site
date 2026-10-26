@@ -10,7 +10,7 @@ tags:
   - business-analysis
   - craft
   - career
-description: "How to push back on senior stakeholders who outrank you, without ending your career. The pre-meeting move, escalating risk not disagreement, and the calibration that earns trust."
+description: "How to push back on senior stakeholders without ending your career: the pre-meeting move, escalating risk not disagreement, and earning trust."
 ---
 
 A BA I worked with told me about a meeting that broke her. The company's COO had walked into a backlog review and casually said, "We need to add SSO before the end of the quarter." She had been hired to interrogate requirements, not approve them. She started to ask the questions. The COO interrupted her with: "I've already decided. Let's not waste time."
@@ -29,11 +29,11 @@ The standard advice — "ask clarifying questions," "make it about the work, not
 
 Trying to apply peer-level tactics to senior stakeholders produces three failure modes:
 
-**The visible interrogation.** You ask the five questions in a meeting where the stakeholder didn't expect them. They feel ambushed. They escalate, dismiss you, or just route around you next time. You've burned the relationship.
+**The visible interrogation.** [You ask the five questions](/posts/five-questions-three-worked-examples/) in a meeting where the stakeholder didn't expect them. They feel ambushed. They escalate, dismiss you, or just route around you next time. You've burned the relationship.
 
 **The quiet build.** You internally disagree but ship the thing anyway, telling yourself you "raised concerns." You didn't. You expressed mild discomfort. The senior stakeholder thinks you're aligned. When the thing fails, you have no defensible record of having opposed it.
 
-**The career-limiting move.** You go to the meeting with a strongly-worded one-pager arguing against their proposal, hand it to them in front of others, and watch your manager's face go grey. The argument might be right. The career move was wrong. You've made the senior stakeholder look uninformed in public, which is the one thing no senior stakeholder forgives.
+**The career-limiting move.** You go to the meeting with a [strongly-worded one-pager](/posts/the-one-page-artifact-that-earns-the-right-to-push-back/) arguing against their proposal, hand it to them in front of others, and watch your manager's face go grey. The argument might be right. The career move was wrong. You've made the senior stakeholder look uninformed in public, which is the one thing no senior stakeholder forgives.
 
 The version of pushback that works is none of these. It's something quieter and more deliberate.
 
@@ -81,7 +81,7 @@ The five-question framework is a tool for calibration. When you use it against a
 
 ## The career math
 
-Most BAs who plateau at mid-level do so because they've optimised for being right in meetings. The ones who advance optimise for being calibrated over years. The two are not the same. The calibrated BA might raise fewer concerns and miss a few real issues. The right-in-meetings BA raises many concerns, half of which turn out to be noise, and acquires a reputation for being difficult.
+Most BAs who [plateau at mid-level](/posts/what-separates-bas-who-compound-from-bas-who-plateau/) do so because they've optimised for being right in meetings. The ones who advance optimise for being calibrated over years. The two are not the same. The calibrated BA might raise fewer concerns and miss a few real issues. The right-in-meetings BA raises many concerns, half of which turn out to be noise, and acquires a reputation for being difficult.
 
 If you're a BA or PO working under senior people who don't take pushback well, the long-game move is to build a track record that earns you the right to be heard. Every prediction you make in writing, dated, accumulates over time. The senior people who initially brush you off will, within eighteen months, start asking for your read before they decide.
 

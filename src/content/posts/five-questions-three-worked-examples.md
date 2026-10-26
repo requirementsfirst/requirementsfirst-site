@@ -10,7 +10,7 @@ tags:
   - business-analysis
   - frameworks
   - examples
-description: "The five-question template only earns its keep when you watch it work on real requests. Here it is applied to three requests every BA has seen: a customer health score dashboard, a loyalty program, and an AI chatbot for the support site."
+description: "The five-question template applied to three requests every BA has seen: a health score dashboard, a loyalty program, and an AI support chatbot."
 ---
 
 The previous piece argued that the requirements artifact survives in any format — feature canvas, epic, brief — as long as it answers five questions: who's affected and how we know, what they're doing today, what changes if we ship, what we don't know, and what we're committing to.
@@ -21,7 +21,7 @@ That argument is easy to nod at and hard to apply. So this piece walks through t
 
 The request, as it lands: "We need a customer health score dashboard. The team needs to see which accounts are at risk so we can intervene before they churn."
 
-This sounds like a clean, well-formed requirement. It names the user (the sales team), the action (see at-risk accounts), and the benefit (reduce churn). It would pass INVEST. It would split well via SPIDR. A BA who skipped the five questions would scope it, write the stories, and ship it.
+This sounds like a clean, well-formed requirement. It names the user (the sales team), the action (see at-risk accounts), and the benefit (reduce churn). [It would pass INVEST](/posts/invest-spidr-both-miss-the-point/). It would split well via SPIDR. A BA who skipped the five questions would scope it, write the stories, and ship it.
 
 Now the questions.
 
@@ -83,4 +83,4 @@ The questions take an hour to ask seriously. Building the wrong thing takes a qu
 
 ---
 
-*The next piece in this series looks at one of the hardest parts of this practice: pushing back on stakeholders who've already mentally committed to their proposed solution. The five questions don't help if you can't get them asked. Subscribe below to get it.*
+*The next piece in this series looks at one of the hardest parts of this practice: [pushing back on stakeholders](/posts/pushing-back-on-people-who-outrank-you/) who've already mentally committed to their proposed solution. The five questions don't help if you can't get them asked. Subscribe below to get it.*

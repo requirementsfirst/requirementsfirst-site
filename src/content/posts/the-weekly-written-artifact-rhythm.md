@@ -10,10 +10,10 @@ tags:
   - craft
   - career
   - habits
-description: "The weekly writing habit that separates business analysts who advance from those who plateau. Predictions, patterns, revisions, and why most BAs cannot sustain it."
+description: "The weekly writing habit that separates BAs who advance from those who plateau: predictions, patterns, revisions, and why most cannot sustain it."
 ---
 
-The previous pieces in this series argued for one-page artifacts as the tool that earns BAs the right to push back. The artifact works in the moment. What changes a career is not the artifact but the rhythm.
+The previous pieces in this series argued for [one-page artifacts](/posts/the-one-page-artifact-that-earns-the-right-to-push-back/) as the tool that earns BAs the right to push back. The artifact works in the moment. What changes a career is not the artifact but the rhythm.
 
 The BAs I've seen advance into senior roles all share a habit that almost no entry-level training mentions. They produce a small written artifact every week, regardless of whether anyone asked for it. Over a quarter, the artifacts accumulate into something more valuable than any single one of them: a track record. Over a year, the track record becomes the reputation.
 

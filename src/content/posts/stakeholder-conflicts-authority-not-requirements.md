@@ -10,7 +10,7 @@ tags:
   - business-analysis
   - communication
   - org-design
-description: When a stakeholder refuses to discuss a request, the standard advice is "ask better questions". This is almost always wrong. The problem is rarely communication. It's that nobody has agreed who gets to decide what, and the stakeholder is defending territory they're not sure they own.
+description: "Most stakeholder conflicts are not about requirements. Nobody has agreed who decides what, so the stakeholder defends territory. What to do instead."
 ---
 
 Every BA training course teaches you the same thing. When stakeholders are difficult, ask better questions. Use the 5 Whys. Try active listening. Build rapport. Lead with empathy.
@@ -51,7 +51,7 @@ If your organisation matches any of these, most of your stakeholder difficulty i
 
 When a stakeholder pushes back unexpectedly hard on a reasonable question, three things to notice:
 
-**One. Did the pushback come immediately, before they processed the question?** Genuine resistance to a question takes a few seconds — the person considers the question, decides they don't want to answer, then deflects. Authority defense is instant. It happens in the first half-second because it's not a response to what you asked; it's a response to the perceived challenge of being asked.
+**One. Did the pushback come immediately, before they processed the question?** [Genuine resistance to a question](/posts/handling-stakeholder-resistance-to-questions/) takes a few seconds — the person considers the question, decides they don't want to answer, then deflects. Authority defense is instant. It happens in the first half-second because it's not a response to what you asked; it's a response to the perceived challenge of being asked.
 
 **Two. Did the pushback escalate disproportionately?** If you ask "what's the use case?" and the stakeholder responds with "I don't have time for this kind of interrogation", the response is two levels harsher than the question. Disproportionate escalation is almost always a tell that you've hit an authority nerve. Reasonable people don't go from zero to interrogation in one question unless something else is going on.
 
@@ -81,7 +81,7 @@ In practice this looks like:
 
 Sometimes there is no clear owner. The authority is genuinely diffuse, and no amount of investigation will produce a clean answer. In this case, your job is to name the gap to your own manager, not to solve it yourself.
 
-One framing that works: "I don't think we have a clean owner for [decision]. I can proceed with [stakeholder]'s preferences and document the assumption, but if [other person] objects later, we'll need to redo the work. How do you want me to handle this?" Putting the question to your own manager removes you from the authority dispute. You're not adjudicating — you're flagging a structural gap and asking for direction.
+One framing that works: "I don't think we have a clean owner for [decision]. I can proceed with [stakeholder]'s preferences and [document the assumption](/posts/assumption-log-template-for-business-analysts/), but if [other person] objects later, we'll need to redo the work. How do you want me to handle this?" Putting the question to your own manager removes you from the authority dispute. You're not adjudicating — you're flagging a structural gap and asking for direction.
 
 This is a more honest move than running a script on a stakeholder who is, fundamentally, defending themselves against an organisational ambiguity they didn't create. Your communication skills are not the solution. The solution is upstream, and your job is to make the upstream problem visible to people who can fix it.
 

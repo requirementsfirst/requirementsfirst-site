@@ -10,7 +10,7 @@ tags:
   - discovery
   - requirements
   - craft
-description: "An assumption log template for business analysts that ranks risk instead of listing it. Three questions per assumption, one score from 0 to 100, and a worked example you can copy."
+description: "An assumption log template that ranks risk instead of listing it: three questions per assumption, one score from 0 to 100, and a worked example."
 ---
 
 Every project template has an assumptions section. The RAID log has a tab for it. The BRD has a heading for it. And on almost every project I have seen, that section is a list of fifteen sentences that nobody reads after week two.
@@ -69,7 +69,7 @@ Why multiply instead of add? Because multiplication lets any single factor pull 
 
 ## A worked example: the refund portal
 
-Here is a synthetic example. A retailer wants a self-service refund portal so customers stop emailing support for refunds. After the first two discovery sessions, the BA has five assumptions in the log.
+Here is a synthetic example. A retailer wants a self-service refund portal so customers stop emailing support for refunds. After the [first two discovery sessions](/posts/how-to-actually-run-a-stakeholder-discovery-conversation/), the BA has five assumptions in the log.
 
 | Assumption | Impact / Confidence / Reach | Score |
 | --- | --- | --- |

@@ -78,4 +78,4 @@ The person who understands this stops worrying about whether they're "really" a 
 
 ---
 
-*The next piece in this series looks at what actually changed about being a BA between 2020 and 2025, and what didn't. Subscribe below to get it.*
+*The next piece in this series looks at [what actually changed about being a BA between 2020 and 2025](/posts/what-changed-about-being-a-ba-2020-2025/), and what didn't. Subscribe below to get it.*

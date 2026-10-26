@@ -1,0 +1,39 @@
+---
+// End-of-article promo for the paid Notion template (Gumroad).
+// Rendered on every post except the assumption-log article itself,
+// which already carries its own in-body mention.
+// Plain link, no tracking params (see tools/REDDIT_PLAYBOOK.md link rules).
+
+const PRODUCT_URL = "https://requirementsfirst.gumroad.com/l/lrvkcv";
+const ARTICLE_URL = "/posts/assumption-log-template-for-business-analysts/";
+---
+
+<aside
+  data-template-promo
+  aria-labelledby="template-promo-heading"
+  class="border-border mx-auto mt-10 max-w-[68ch] rounded-md border px-5 py-5 sm:px-6"
+>
+  <p
+    id="template-promo-heading"
+    class="text-foreground text-base font-semibold tracking-tight"
+    style="font-family: var(--font-sans);"
+  >
+    Running discovery on a project right now?
+  </p>
+  <p
+    class="text-muted-foreground mt-2 text-sm sm:text-base"
+    style="font-family: var(--font-serif);"
+  >
+    I built a Notion template that ranks your project's assumptions by how
+    much damage they do if they turn out wrong, and tracks the questions you
+    are still waiting on.
+    <a
+      href={ARTICLE_URL}
+      class="text-accent underline-offset-4 hover:underline">How it works</a
+    >, or
+    <a
+      href={PRODUCT_URL}
+      class="text-accent underline-offset-4 hover:underline">get the template</a
+    >.
+  </p>
+</aside>

@@ -24,6 +24,12 @@ const {
 } = Astro.props;
 
 const socialImageURL = new URL(ogImage, Astro.site ?? Astro.url);
+
+// Listing pages (tags, page 2+ of the post list, search, archives) add no
+// content of their own. Keep them out of Google's index but let crawlers
+// follow their links. Must match NOINDEX_PATHS in astro.config.ts.
+const NOINDEX_PATHS = [/^\/tags\//, /^\/posts\/\d+\/?$/, /^\/search\/?$/, /^\/archives\/?$/];
+const noindex = NOINDEX_PATHS.some(re => re.test(Astro.url.pathname));
 const rssHref = getRelativeLocaleUrl(
   Astro.currentLocale ?? config.site.lang,
   "rss.xml"
@@ -58,6 +64,7 @@ const rssHref = getRelativeLocaleUrl(
       href={getAssetPath("apple-touch-icon.png")}
     />
     <link rel="canonical" href={canonicalURL} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
     <meta name="generator" content={Astro.generator} />
 
     <!-- Fonts. Preload weights used above the fold to avoid FOUT. -->

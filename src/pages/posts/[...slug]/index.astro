@@ -14,6 +14,7 @@ import BackButton from "./_components/BackButton.astro";
 import BackToTopButton from "./_components/BackToTopButton.astro";
 import AdjacentPostNav from "./_components/AdjacentPostNav.astro";
 import NewsletterSignup from "@/components/NewsletterSignup.astro";
+import TemplatePromo from "@/components/TemplatePromo.astro";
 import config from "@/config";
 
 export async function getStaticPaths() {
@@ -199,6 +200,8 @@ const ogImage = ogImageUrl
     >
       <Content />
     </article>
+
+    {!post.filePath?.endsWith("assumption-log-template-for-business-analysts.md") && <TemplatePromo />}
 
     {/*
       Inline newsletter form. Rendered hidden here; the post-mount

@@ -17,13 +17,19 @@ import {
 import { transformerFileName } from "./src/utils/transformers/fileName";
 import config from "./astro-paper.config";
 
+// Must match NOINDEX_PATHS in src/layouts/Layout.astro.
+const NOINDEX_PATHS = [/^\/tags\//, /^\/posts\/\d+\/?$/, /^\/search\/?$/, /^\/archives\/?$/];
+
 export default defineConfig({
   site: config.site.url,
   integrations: [
     mdx(),
     sitemap({
-      filter: page =>
-        config.features?.showArchives !== false || !page.endsWith("/archives/"),
+      // Listing pages are noindex (see Layout.astro), so leave them out.
+      filter: page => {
+        const path = new URL(page).pathname;
+        return !NOINDEX_PATHS.some(re => re.test(path));
+      },
     }),
   ],
   i18n: {

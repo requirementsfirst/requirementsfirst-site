@@ -1,0 +1,49 @@
+name: Build templates
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "tools/templates/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-templates
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install libraries
+        run: pip install openpyxl==3.1.5 python-docx==1.1.2
+
+      - name: Build every template
+        run: |
+          set -e
+          for f in tools/templates/*.py; do
+            echo "Building $f"
+            python "$f"
+          done
+
+      - name: Commit generated files
+        run: |
+          git config user.name "requirementsfirst"
+          git config user.email "requirementsfirst@users.noreply.github.com"
+          git add public/*.xlsx public/*.docx 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No template changes"
+          else
+            git commit -m "Build templates from tools/templates"
+            git push
+          fi

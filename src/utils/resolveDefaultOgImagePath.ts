@@ -1,7 +1,9 @@
 import type { ResolvedAstroPaperConfig } from "@/types/config";
 import { getAssetPath } from "./withBase";
 
-const publicFiles = import.meta.glob("/public/*", { eager: false });
+const publicFiles = import.meta.glob("/public/*.{jpg,jpeg,png,webp,avif,gif,svg}", {
+  eager: false,
+});
 
 function existsInPublic(filename: string): boolean {
   return `/public/${filename}` in publicFiles;

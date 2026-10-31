@@ -1,7 +1,7 @@
 ---
 author: Arun Mehta
 pubDatetime: 2026-10-27T08:10:00.000+05:30
-title: "Requirements traceability matrix template: three linked tables, not one spreadsheet"
+title: "Requirements traceability matrix template (free Excel and Notion): three linked tables"
 slug: requirements-traceability-matrix-template
 featured: false
 draft: false
@@ -10,7 +10,7 @@ tags:
   - requirements
   - documentation
   - craft
-description: "A free requirements traceability matrix template that links business requirements, functional requirements and tests, and calculates coverage for you."
+description: "A free requirements traceability matrix template for Excel and Notion. Links business requirements, functional requirements and tests, and calculates coverage."
 ---
 
 A requirements traceability matrix answers one question: for everything the business asked for, can we show that we built it and proved it works? It is a simple question. The usual way of answering it, one enormous spreadsheet, is why most traceability matrices are out of date by the second sprint.
@@ -89,9 +89,19 @@ That is a discovery problem, not a delivery problem, and it is cheaper to catch 
 
 ## Get the template
 
-I built this as a free Notion template: the three linked databases with automatic IDs (BR, FR, TC), coverage and trace status calculated for you, a trace status view, a coverage gaps list, a failing tests list, and the refund portal example filled in.
+There are two free versions. Both come with the refund portal example filled in.
 
-[Get the Requirements Traceability Matrix template, free](https://requirementsfirst.gumroad.com/l/bkgdtg). It is pay what you want, so enter 0 at checkout.
+**Excel.** [Download the Requirements Traceability Matrix for Excel](/requirements-traceability-matrix-template.xlsx). It also opens in Google Sheets and LibreOffice. Three sheets, Business Reqs, Functional Reqs and Test Cases, with dropdowns for the links, so you pick an ID instead of typing one. Coverage and trace status are formulas and colour themselves red, amber or green. No macros.
+
+**Notion.** The three linked databases with automatic IDs (BR, FR, TC), coverage and trace status calculated for you, a trace status view, a coverage gaps list and a failing tests list. [Get the Notion version](https://requirementsfirst.gumroad.com/l/bkgdtg). It is pay what you want, so enter 0 at checkout.
+
+## How the Excel version handles many-to-many links
+
+A spreadsheet cannot hold a real many-to-many link, so the Excel template keeps one link per row and counts instead of looking up.
+
+Each test case names the one functional requirement it proves. Each functional requirement names the business requirement it serves, with an optional second column for the rare one that serves two. Coverage is then a few COUNTIFS: how many tests point at this requirement, how many of them passed, how many failed. Trace status does the same one level up, counting how many of a business requirement's functional requirements are failing or have gaps.
+
+Because nothing is merged and nothing is comma-separated, you can sort and filter any sheet without breaking it. That is the whole trick. If you already have a single-sheet RTM, split it into the three sheets and the formulas do the checking.
 
 ---
 

@@ -91,7 +91,7 @@ That is a discovery problem, not a delivery problem, and it is cheaper to catch 
 
 There are two free versions. Both come with the refund portal example filled in.
 
-**Excel.** [Download the Requirements Traceability Matrix for Excel](/requirements-traceability-matrix-template.xlsx). It also opens in Google Sheets and LibreOffice. Three sheets, Business Reqs, Functional Reqs and Test Cases, with dropdowns for the links, so you pick an ID instead of typing one. Coverage and trace status are formulas and colour themselves red, amber or green. No macros.
+**Excel.** [Download the Requirements Traceability Matrix for Excel](https://requirementsfirst.gumroad.com/l/scfqu). It is free: enter 0 at checkout. It also opens in Google Sheets and LibreOffice. Three sheets, Business Reqs, Functional Reqs and Test Cases, with dropdowns for the links, so you pick an ID instead of typing one. Coverage and trace status are formulas and colour themselves red, amber or green. No macros.
 
 **Notion.** The three linked databases with automatic IDs (BR, FR, TC), coverage and trace status calculated for you, a trace status view, a coverage gaps list and a failing tests list. [Get the Notion version](https://requirementsfirst.gumroad.com/l/bkgdtg). It is pay what you want, so enter 0 at checkout.
 

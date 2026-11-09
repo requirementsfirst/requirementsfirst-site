@@ -90,6 +90,10 @@ Non-functional requirement: how well the system must do it. Constrains the funct
 
 The distinction matters because confusing the first two either smuggles an unvalidated solution into the problem, or hands engineering an outcome with no specification. Knowing which one you are writing, in the moment, is the thing that prevents both.
 
+## Get the template
+
+If you need to write these down for a real project, [the free BRD and FRD template for Word](https://requirementsfirst.gumroad.com/l/mbmqht) keeps both levels in one file, with a trace check and a worked example. Enter 0 at checkout. For when to split the documents and where an SRS fits, read [BRD vs FRD vs SRS](/posts/brd-vs-frd-vs-srs/).
+
 ---
 
 *If this was useful, the publication covers the rest of the requirements craft the same way: plainly, with a point of view. Subscribe below for new pieces as they publish.*

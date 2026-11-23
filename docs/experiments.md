@@ -46,6 +46,8 @@ Site: 18 clicks, 1,990 impressions, position 27.2. Last 7 days: 4 clicks, 646 im
 
 ## Decisions
 
+- 2026-11-23: Publishing moves to a cloud scheduled task that pushes to GitHub directly, so a week is never skipped when the laptop is off (the 16 Nov run was lost that way). The laptop task keeps only Search Console, Bing and Gumroad.
+
 - 2026-10-31: Stop building new Notion templates. Marketplaces are checkouts, not traffic. Search demand from BAs wanting Excel/Word files is the only measured demand.
 - 2026-10-31: Paid "BA Template Kit (Excel + Word)" at about $19 once 3 or more free template pages each get Google clicks in a 28-day window.
 - 2026-11-09: Google ranks us at positions 6 to 10 for conceptual comparison queries and at 75 to 95 for template and file queries. Template-intent impressions at those positions do not count as demand. Double down on comparisons, with a template attached, not templates alone.

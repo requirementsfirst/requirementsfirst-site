@@ -11,7 +11,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: build-templates
+  group: repo-writes
   cancel-in-progress: false
 
 jobs:

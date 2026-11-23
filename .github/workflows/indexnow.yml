@@ -1,0 +1,38 @@
+name: IndexNow
+
+# Tells Bing (and other IndexNow engines) about new or changed articles as soon
+# as they are pushed. The key file is public/baf164472d42b2fbf4f2045486699854.txt; it is meant to be public.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/content/posts/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Wait for Cloudflare to deploy
+        run: sleep 150
+      - name: Submit changed article URLs
+        run: |
+          set -e
+          files=$(git diff --name-only --diff-filter=AM HEAD~1 HEAD -- 'src/content/posts/*.md' || true)
+          urls=""
+          for f in $files; do
+            slug=$(grep -m1 '^slug:' "$f" | sed 's/^slug: *//; s/"//g') || true
+            [ -z "$slug" ] && slug=$(basename "$f" .md)
+            urls="$urls\"https://requirementsfirst.com/posts/$slug/\","
+          done
+          [ -z "$urls" ] && { echo "No changed articles"; exit 0; }
+          body="{\"host\":\"requirementsfirst.com\",\"key\":\"baf164472d42b2fbf4f2045486699854\",\"keyLocation\":\"https://requirementsfirst.com/baf164472d42b2fbf4f2045486699854.txt\",\"urlList\":[${urls%,}]}"
+          echo "$body"
+          curl -sS -o /dev/null -w "IndexNow HTTP %{http_code}\n" -X POST https://api.indexnow.org/indexnow -H "Content-Type: application/json; charset=utf-8" -d "$body"

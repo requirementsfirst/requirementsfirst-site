@@ -18,7 +18,7 @@ import { transformerFileName } from "./src/utils/transformers/fileName";
 import config from "./astro-paper.config";
 
 // Must match NOINDEX_PATHS in src/layouts/Layout.astro.
-const NOINDEX_PATHS = [/^\/tags\//, /^\/posts\/\d+\/?$/, /^\/search\/?$/, /^\/archives\/?$/];
+const NOINDEX_PATHS = [/^\/tags\//, /^\/posts\/\d+\/?$/, /^\/search\/?$/, /^\/archives\/?$/, /^\/download\//];
 
 export default defineConfig({
   site: config.site.url,

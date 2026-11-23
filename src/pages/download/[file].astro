@@ -1,0 +1,35 @@
+---
+// One page per downloadable template in public/. Linking here instead of
+// straight to the file lets Cloudflare Web Analytics count downloads as page
+// views of /download/<file>/. The page then hands over the file.
+import fs from "node:fs";
+import path from "node:path";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+
+export function getStaticPaths() {
+  return fs
+    .readdirSync(path.resolve("public"))
+    .filter(f => /\.(xlsx|docx)$/.test(f))
+    .map(file => ({ params: { file } }));
+}
+
+const { file } = Astro.params;
+const href = `/${file}`;
+---
+
+<Layout title={`Downloading ${file} | RequirementsFirst`}>
+  <Header />
+  <main id="main-content" class="app-layout flex flex-1 items-center justify-center">
+    <div class="mb-14 flex flex-col items-center gap-4 text-center">
+      <h1 class="text-2xl font-bold">Your download is starting</h1>
+      <p>If it does not start, <a class="underline" href={href} download>download {file}</a>.</p>
+      <p><a class="underline" href="/">Back to RequirementsFirst</a></p>
+    </div>
+  </main>
+  <Footer />
+  <script is:inline define:vars={{ href }}>
+    setTimeout(() => { window.location.href = href; }, 800);
+  </script>
+</Layout>

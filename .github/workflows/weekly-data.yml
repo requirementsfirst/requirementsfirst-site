@@ -1,0 +1,40 @@
+name: Weekly data
+
+on:
+  schedule:
+    - cron: "30 0 * * 1" # Mondays 06:00 IST
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repo-writes
+  cancel-in-progress: false
+
+jobs:
+  data:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests==2.32.3 google-auth==2.35.0
+      - name: Pull numbers
+        env:
+          GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
+          BING_API_KEY: ${{ secrets.BING_API_KEY }}
+          GUMROAD_TOKEN: ${{ secrets.GUMROAD_TOKEN }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+        run: python tools/data/weekly_data.py
+      - name: Commit
+        run: |
+          git config user.name "requirementsfirst"
+          git config user.email "requirementsfirst@users.noreply.github.com"
+          git add docs/search-data.md
+          if git diff --cached --quiet; then echo "No change"; exit 0; fi
+          git commit -m "Weekly search data $(date -u +%F)"
+          git pull --rebase origin main
+          git push

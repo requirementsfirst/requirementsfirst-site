@@ -78,6 +78,8 @@ When you are ready for your own project, either delete the example rows (cream c
 
 [Download the requirements traceability matrix example for Excel](https://requirementsfirst.gumroad.com/l/pjvkdi). It is free: enter 0 at checkout and the file link arrives straight away.
 
+Want the full set? The [BA Template Kit (Excel + Word)](https://requirementsfirst.gumroad.com/l/lglkd) bundles this file with the blank matrix, the BRD and FRD Word template, and three files that are not free on the site: a RACI matrix, a change request log and a decision log. It costs 19 dollars.
+
 Open it, go to the Business Reqs sheet, and before reading any formula ask yourself which row you would mention first in a status meeting. If your answer is BR-6, you already know what a traceability matrix is for.
 
 ---

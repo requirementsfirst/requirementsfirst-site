@@ -12,19 +12,19 @@ export function getStaticPaths() {
   return fs
     .readdirSync(path.resolve("public"))
     .filter(f => /\.(xlsx|docx)$/.test(f))
-    .map(file => ({ params: { file } }));
+    .map(file => ({ params: { asset: file } }));
 }
 
-const { file } = Astro.params;
-const href = `/${file}`;
+const asset = Astro.params.asset as string;
+const href = `/${asset}`;
 ---
 
-<Layout title={`Downloading ${file} | RequirementsFirst`}>
+<Layout title={`Downloading ${asset} | RequirementsFirst`}>
   <Header />
   <main id="main-content" class="app-layout flex flex-1 items-center justify-center">
     <div class="mb-14 flex flex-col items-center gap-4 text-center">
       <h1 class="text-2xl font-bold">Your download is starting</h1>
-      <p>If it does not start, <a class="underline" href={href} download>download {file}</a>.</p>
+      <p>If it does not start, <a class="underline" href={href} download>download {asset}</a>.</p>
       <p><a class="underline" href="/">Back to RequirementsFirst</a></p>
     </div>
   </main>

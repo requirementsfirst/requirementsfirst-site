@@ -228,6 +228,8 @@ The questions to walk through:
 
 You'll find that three or four sharp criteria from this list will replace ten weak ones, and prevent more bugs than the long version did.
 
+One thing that should not be on the list: rules that apply to every story, like code review or an audit log entry. Those belong in the team's definition of done, not in each story's criteria. [Acceptance criteria vs definition of done](/posts/acceptance-criteria-vs-definition-of-done/) explains where the line sits, with a free Excel tracker.
+
 ## The discipline
 
 The discipline is to stop writing acceptance criteria that describe the happy path. The happy path is what the feature does. The criteria are for the unhappy paths — because the unhappy paths are where the bugs ship.
